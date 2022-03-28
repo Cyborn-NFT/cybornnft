@@ -53,7 +53,7 @@ export default function Account() {
     <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
-  </Head><CybornHeader /><br /><br /><br /><br /><p className="text-white text-center text-6xl">No NFTs Owned By You</p><br /><br /><br /><br /><CybornFooter /></div>)
+  </Head><CybornHeader /><hr /><br /><br /><br /><br /><p className="text-white text-center text-6xl">No NFTs Owned By You</p><br /><br /><br /><br /><hr /><CybornFooter /></div>)
   return (
     <div>
     <Head>

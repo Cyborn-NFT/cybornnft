@@ -78,6 +78,7 @@ function Create(){
   return(
     <div>
     <CybornHeader />
+    <hr />
     <div className="h-screen font-Ubuntu w-screen antialiased">
           <ToastContainer position="top-left"
       autoClose={1000}

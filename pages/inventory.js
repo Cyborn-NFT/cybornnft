@@ -56,7 +56,7 @@ export default function Inventory() {
     <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
-  </Head><CybornHeader /><br /><br /><br /><br /><p className="text-white text-center text-6xl">No NFTs Created By You</p><br /><br /><br /><br /><CybornFooter /></div>)
+  </Head><CybornHeader /><hr /><br /><br /><br /><br /><p className="text-white text-center text-6xl">No NFTs Created By You</p><br /><br /><br /><br /><hr /><CybornFooter /></div>)
   return (
     <div>
     <Head>
@@ -67,6 +67,7 @@ export default function Inventory() {
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
     <CybornHeader />
+    <hr />
       <div className="p-4 bg-background">
         <h2 className="text-6xl text-white py-2">Items Created</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
@@ -117,6 +118,7 @@ export default function Inventory() {
           )
         }
         </div>
+        
         <CybornFooter />
     </div>
   )
