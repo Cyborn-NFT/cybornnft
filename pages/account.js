@@ -48,7 +48,7 @@ export default function Account() {
     setLoadingState('loaded')
   }
   if (loadingState === 'loaded' && !nfts.length) return (<div className="bg-background "><Head>
-    <title>Arkhamm Web3</title>
+    <title>Cyborn</title>
     <meta name="description" content="Cyborn Blockchain" />
     <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
@@ -57,7 +57,7 @@ export default function Account() {
   return (
     <div>
     <Head>
-      <title>Arkhamm Web3</title>
+      <title>Cyborn</title>
       <meta name="description" content="Cyborn Blockchain" />
       <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
       <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
