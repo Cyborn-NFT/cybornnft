@@ -254,7 +254,7 @@ function Home() {
 
   {results.map((item, index)=>{
   return(
-    <div className="block p-8 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-cybornheader dark:border-gray-700 dark:hover:bg-gray-700">
+    <div className="block p-8 max-w-sm rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-cybornheader dark:border-gray-700 dark:hover:bg-gray-700">
       <div className="max-w-sm rounded overflow-hidden shadow-lg">
         <div className="px-2 py-4">
           <div key={index} className="font-light text-md mb-2">
