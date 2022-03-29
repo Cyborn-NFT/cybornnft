@@ -250,7 +250,7 @@ function Home() {
 <br />
 <div>
 <h1 className="text-center text-white text-5xl"> Collections </h1>
-<div id="items" className="relative max-w-screen-xl px-4 py-24 mx-auto lg:items-center lg:flex lg:grid grid-cols-3 gap-4 sm:grid-cols-1">
+<div id="items" className="relative max-w-screen-xl px-4 py-24 mx-auto lg:items-center lg:flex lg:grid grid-cols-3 gap-4">
 
   {results.map((item, index)=>{
   return(
