@@ -169,20 +169,26 @@ export default function Inventory() {
                   </div>
 
                   <div className="relative p-18 flex-auto lg:grid grid-cols-2 gap-4">
+                    <div>
                     <input
                       placeholder="Auction Asset Name"
                       className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     />
+                    </div>
                       <br />
+                    <div>
                     <textarea
                       placeholder="Start Auction Price"
                       className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     />
+                    </div>
                       <br />
+                    <div>
                     <input
                       placeholder="End Auction Price"
                       className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     />
+                    </div>
                     <br />
                     <div class="relative">
                       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
