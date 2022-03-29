@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import Head from "next/head";
 import Link from "next/link";
@@ -6,10 +6,45 @@ import { supabase } from '../client'
 import IndexHeader from "/components/IndexHeader"
 import CybornFooter from "/components/CybornFooter"
 import { useRouter } from "next/router";
+import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
+import axios from 'axios'
+import Web3Modal from "web3modal"
+import Image from 'next/image'
+import { ethers } from 'ethers';
 
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [nfts, setNfts] = useState([])
+  const [loadingState, setLoadingState] = useState('not-loaded')
+  useEffect(() => {
+    loadNFTs()
+  }, [])
+  async function loadNFTs() {
+    const provider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/1c632cde3b864975a1d2f123cf5b7ec9")
+    const tokenContract = new ethers.Contract(CYBORN_NFT_ADDRESS, CYBORN_NFT_ABI, provider)
+    const marketContract = new ethers.Contract(CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, provider)
+    const data = await marketContract.fetchMarketItems()
+
+
+    const items = await Promise.all(data.map(async i => {
+      const tokenUri = await tokenContract.tokenURI(i.tokenId)
+      const meta = await axios.get(tokenUri)
+      let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+      let item = {
+        price,
+        tokenId: i.tokenId.toNumber(),
+        seller: i.seller,
+        owner: i.owner,
+        image: meta.data.image,
+        name: meta.data.name,
+        description: meta.data.description,
+      }
+      return item
+    }))
+    setNfts(items)
+    setLoadingState('loaded')
+  }
   const router = useRouter();
   async function signIn() {
     const { error, data } = await supabase.auth.signIn({
@@ -85,6 +120,36 @@ export default function SignIn() {
     </div>
   </div>
 </section>
+<div className="flex justify-center bg-cybornmain">
+  <div className="px-4" style={{ maxWidth: '1200px' }}>
+    <br />
+      <br />
+      <h1 className="text-white text-center text-5xl"> Explore NFTs </h1>
+      <br />
+    <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+      {
+        nfts.map((nft, i) => (
+          <div key={i} className="rounded-xl overflow-hidden">
+            <img src={nft.image} />
+            <div className="p-4 bg-black">
+              <p style={{ height: '40px' }} className="text-2xl text-white font-semibold">{nft.name}</p>
+              <p style={{ height: '40px' }} className="text-white font-light">{nft.description}</p>
+            </div>
+            <div className="p-4 bg-cybornheader">
+            <p style={{ height: '40px' }} className="text-xs text-white font-light">Seller: {nft.seller}</p>
+              <p className="text-xl mb-4 font-bold text-white">{nft.price} ETH</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+      <br />
+        <br />
+  </div>
+
+</div>
+
+
 <CybornFooter />
 
     </div>
