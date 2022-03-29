@@ -109,7 +109,7 @@ export default function Inventory() {
                 </div>
                 <div className="lg:grid grid-cols-2 gap-4">
                   <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Set Auction</button>
-                  <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Transfer</button>
+                  <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowTransferModal(true)}>Transfer</button>
                 </div>
               </div>
             ))
@@ -164,7 +164,7 @@ export default function Inventory() {
                       className="p-1 ml-auto bg-transparent border-0 text-white opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                       onClick={() => setShowModal(false)}
                     >
-                      <span className="bg-white text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      <span className="bg-white text-white h-6 w-6 text-2xl block">
                         ×
                       </span>
                     </button>
@@ -247,7 +247,7 @@ export default function Inventory() {
                       className="p-1 ml-auto bg-transparent border-0 text-white opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                       onClick={() => setShowTransferModal(false)}
                     >
-                      <span className="bg-white text-white h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      <span className="bg-white text-white h-6 w-6 text-2xl block">
                         ×
                       </span>
                     </button>
