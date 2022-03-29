@@ -168,7 +168,7 @@ function Home() {
 
   <div className="hidden sm:block sm:inset-0 sm:absolute"></div>
 
-  <div className="relative max-w-screen-xl px-4 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
+  <div className="relative max-w-screen-xl px-8 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
     <div className="max-w-xl text-center sm:text-left">
       <h1 className="text-3xl text-white font-extrabold sm:text-5xl">
         Explore our NFT Market
@@ -202,10 +202,24 @@ function Home() {
     <br />
       <br />
       <h1 className="text-white text-center text-5xl"> Explore NFTs </h1>
+        <br />
+          <br />
+      <div className="lg:grid grid-cols-3 gap-6">
+        <input type="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
+        <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option value="">Search List</option>
+          <option value="Buy">Buy</option>
+          <option value="Auction">Auction</option>
+        </select>
+        <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option value="">Search Protocol</option>
+          <option value="ETH">ETH</option>
+          <option value="Matic">Matic</option>
+        </select>
+      </div>
       <br />
       <br />
       <br />
-
     <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
       {
         nfts.map((nft, i) => (
