@@ -206,7 +206,7 @@ function Home() {
       <br />
       <br />
 
-    <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 pt-4">
+    <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
       {
         nfts.map((nft, i) => (
           <div key={i} className="rounded-xl overflow-hidden">
