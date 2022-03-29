@@ -91,7 +91,7 @@ function Create(){
 
     transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, tokenId, price, { value: listingPrice })
     await transaction.wait()
-    router.push("/")
+    router.push("/home")
   }
   return(
     <div>
