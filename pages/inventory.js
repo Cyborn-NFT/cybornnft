@@ -171,20 +171,20 @@ export default function Inventory() {
                   <form>
                     <div className="mb-6">
                       <label for="auction"  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Auction Start Price</label>
-                      <input type="text" id="text"  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Auction Start Price" required>
+                      <input type="text" id="text"  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Auction Start Price" required />
                     </div>
                     <div className="mb-6">
                       <label for="text"  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Auction End Price</label>
-                      <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Auction End Price" required>
+                      <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Auction End Price" required />
                     </div>
                     <div  className="flex items-start mb-6">
                       <div  className="flex items-center h-5">
                         <label for="auction"  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Start Auction Period</label>
-                        <input id="date" aria-describedby="remember" type="date"  className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required>
+                        <input id="date" aria-describedby="remember" type="date"  className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
                       </div>
                       <div  className="flex items-center h-5">
                       <label for="auction"  className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">End Auction Period</label>
-                        <input id="date" aria-describedby="remember" type="date"  className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required>
+                        <input id="date" aria-describedby="remember" type="date"  className="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
                       </div>
 
                     </div>
