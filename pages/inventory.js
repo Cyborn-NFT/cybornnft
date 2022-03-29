@@ -7,8 +7,8 @@ import Image from 'next/image'
 import CybornHeader from "/components/CybornHeader"
 import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
-
-
+import { supabase } from '../client'
+import { useRouter } from 'next/router'
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
 
 export default function Inventory() {
@@ -18,6 +18,25 @@ export default function Inventory() {
   useEffect(() => {
     loadNFTs()
   }, [])
+  const router = useRouter()
+  const [profile, setProfile] = useState(null)
+  useEffect(() => {
+    fetchProfile()
+  }, [])
+  async function fetchProfile() {
+    const profileData = await supabase.auth.user()
+    if (!profileData) {
+      router.push('/signin')
+    } else {
+      setProfile(profileData)
+    }
+  }
+  async function signOut() {
+    await supabase.auth.signOut()
+    router.push('/signin')
+  }
+  if (!profile) return null
+
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
       network: "rinkeby",
@@ -118,7 +137,7 @@ export default function Inventory() {
           )
         }
         </div>
-        
+
         <CybornFooter />
     </div>
   )

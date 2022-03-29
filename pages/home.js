@@ -8,7 +8,7 @@ import Image from 'next/image'
 import CybornHeader from "/components/CybornHeader"
 import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
-
+import { supabase } from '../client'
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
 
 
@@ -20,8 +20,27 @@ export default function Home() {
   useEffect(() => {
     loadNFTs()
   }, [])
+
+  const [profile, setProfile] = useState(null)
+  useEffect(() => {
+    fetchProfile()
+  }, [])
+  async function fetchProfile() {
+    const profileData = await supabase.auth.user()
+    if (!profileData) {
+      router.push('/signin')
+    } else {
+      setProfile(profileData)
+    }
+  }
+  async function signOut() {
+    await supabase.auth.signOut()
+    router.push('/signin')
+  }
+  if (!profile) return null
+
   async function loadNFTs() {
-    const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com")
+    const provider = new ethers.providers.JsonRpcProvider("https://rinkeby.infura.io/v3/1c632cde3b864975a1d2f123cf5b7ec9")
     const tokenContract = new ethers.Contract(CYBORN_NFT_ADDRESS, CYBORN_NFT_ABI, provider)
     const marketContract = new ethers.Contract(CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, provider)
     const data = await marketContract.fetchMarketItems()
@@ -59,7 +78,7 @@ export default function Home() {
     await transaction.wait()
     loadNFTs()
   }
-  if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
+  if (loadingState === 'loaded' && !nfts.length) return (<div><CybornHeader /><h1 className="px-20 py-10 text-3xl">No items in marketplace</h1><CybornFooter /></div>)
   return (
     <div className="bg-background">
     <Head>
@@ -70,6 +89,8 @@ export default function Home() {
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
     <CybornHeader />
+    <hr />
+    <br />
     <div className="flex justify-center">
       <div className="px-4" style={{ maxWidth: '1200px' }}>
         <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">

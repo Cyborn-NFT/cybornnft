@@ -4,14 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import Head from 'next/head'
 import CybornHeader from "/components/CybornHeader"
 import CybornFooter from "/components/CybornFooter"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 import Link from 'next/link'
 import Image from 'next/image'
-
+import { supabase } from '../client'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
@@ -22,6 +22,24 @@ function Create(){
   const [fileUrl, setFileUrl] = useState(null)
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
   const router = useRouter()
+
+  const [profile, setProfile] = useState(null)
+  useEffect(() => {
+    fetchProfile()
+  }, [])
+  async function fetchProfile() {
+    const profileData = await supabase.auth.user()
+    if (!profileData) {
+      router.push('/signin')
+    } else {
+      setProfile(profileData)
+    }
+  }
+  async function signOut() {
+    await supabase.auth.signOut()
+    router.push('/signin')
+  }
+  if (!profile) return null
 
   async function onChange(e) {
     const file = e.target.files[0]
