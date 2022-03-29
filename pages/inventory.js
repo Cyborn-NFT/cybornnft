@@ -150,7 +150,7 @@ export default function Inventory() {
         {showModal ? (
           <>
             <div
-              className="justify-center p-36 items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+              className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
             >
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -168,7 +168,7 @@ export default function Inventory() {
                     </button>
                   </div>
 
-                  <div>
+                  <div className="relative p-6 flex-auto">
                     <input
                       placeholder="Auction Asset Name"
                       className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
