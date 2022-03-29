@@ -10,9 +10,51 @@ import axios from 'axios'
 import Web3Modal from "web3modal"
 import Image from 'next/image'
 import { ethers } from 'ethers';
+import { createClient } from "urql";
+
+const getApiDetails = async() =>{
+try{
+const result = await axios.post(
+'https://api.studio.thegraph.com/query/24428/cybornnft-rinkeby/v0.0.1',
+{
+  query: `
+  {
+    marketItemCreateds
+     {
+       id
+       itemId
+       nftContract
+       tokenId
+       seller
+     },
+  }`
+})
+console.log(result.data)
+return result
+}catch(error)
+{
+console.error(error);
+}
+}
+
+
 
 function Home() {
+
+  const [results, setResults] = useState([])
+  useEffect(()=>{
+  const respone = async() =>{
+  const {data} =  await getApiDetails()
+  console.log("Total data",data)
+  setResults(data.data.marketItemCreateds)
+  }
+  if(results){
+  respone()
+  }
+  },[])
+
   const router = useRouter()
+
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -146,7 +188,7 @@ function Home() {
           style={{ margin: 10 }}
         />
 
-        <button onClick={() => signIn()} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+        <button onClick={() => signIn()} className="block w-full px-12 py-3 text-sm font-medium text-white rounded shadow bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">
           SignIn
         </button >
 
@@ -161,7 +203,10 @@ function Home() {
       <br />
       <h1 className="text-white text-center text-5xl"> Explore NFTs </h1>
       <br />
-    <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+      <br />
+      <br />
+
+    <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 pt-4">
       {
         nfts.map((nft, i) => (
           <div key={i} className="rounded-xl overflow-hidden">
@@ -180,22 +225,51 @@ function Home() {
     </div>
       <br />
         <br />
+        <br />
+        <br />
+
+
   </div>
 
 </div>
+<br />
+<br />
+<div>
+<h1 className="text-center text-white text-5xl"> Collections </h1>
+<div id="items" className="relative max-w-screen-xl px-4 py-24 mx-auto lg:items-center lg:flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
 
+  {results.map((item, index)=>{
+  return(
+    <div className="block p-8 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div className="max-w-sm rounded overflow-hidden shadow-lg">
+        <div className="px-2 py-4">
+          <div key={index} className="font-light text-md mb-2">
+            <img className="rounded-full" src="./ark.png" />
+            <p className="text-white text-sm">
+              {item.seller}
+            </p>
+          </div>
+
+          </div>
+        <div className="px-6 pt-4 pb-2">
+          <Link href="/">
+            <a className="w-full lg:w-auto my-4 rounded-full px-1 sm:px-16 py-2 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">Visit</a>
+          </Link>
+
+        </div>
+          <br />
+      </div>
+      </div>
+   )
+  })}
+</div>
+</div>
+
+<hr />
 <CybornFooter />
-
-
     </div>
   )
 }
 
-const navStyle = {
-  margin: 20
-}
-const linkStyle = {
-  marginRight: 10
-}
 
 export default Home;
