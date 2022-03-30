@@ -131,7 +131,7 @@ export default function Inventory() {
                         <br />
                         <p style={{ height: '40px' }} className="text-sm text-white font-light">Owner: {nft.owner}</p>
                         <br />
-                        <p style={{ height: '40px' }} className="text-white font-light">Sold: {nft.sold}</p>
+                        <p style={{ height: '40px' }} className="text-white font-light">Sold: Yes</p>
                       </div>
                       <div className="p-4 bg-black">
                         <p className="text-2xl font-light text-white">Price - {nft.price} ETH</p>
@@ -147,6 +147,8 @@ export default function Inventory() {
             </div>
           )
         }
+        <br />
+        <br />
         </div>
         <div>
         {showModal ? (

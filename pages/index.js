@@ -266,10 +266,7 @@ function Home() {
 
           </div>
         <div className="px-6 pt-4 pb-2">
-          <Link href="/">
-            <a className="w-full lg:w-auto my-4 rounded-full px-1 sm:px-16 py-2 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">Visit</a>
-          </Link>
-
+          <button onClick={()=>router.push(`https://cybornnft.vercel.app/polygon/${item.seller}`)} className="w-full lg:w-auto my-4 rounded-full px-1 sm:px-16 py-2 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">Visit</button>
         </div>
           <br />
       </div>

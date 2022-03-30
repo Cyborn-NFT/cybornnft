@@ -102,6 +102,8 @@ export default function Inventory() {
                 <br />
                 <p style={{ height: '40px' }} className="text-sm text-white font-light">Owner: {nft.owner}</p>
                 <br />
+                <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/polygon/${nft.seller}/${nft.tokenId}`}</p>
+                <br />
                 <p style={{ height: '40px' }} className="text-white font-light">Sold: {nft.sold}</p>
                 </div>
                 <div className="p-4 bg-blue-400">
@@ -116,11 +118,13 @@ export default function Inventory() {
           }
         </div>
       </div>
-        <div className="px-4">
+      <hr />
+        <div className="px-4 bg-cybornheader">
         {
           Boolean(sold.length) && (
             <div>
-              <h2 className="text-2xl py-2">Items sold</h2>
+            <br />
+              <h2 className="text-6xl text-white py-2">Items sold</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
                 {
                   sold.map((nft, i) => (
@@ -131,23 +135,20 @@ export default function Inventory() {
                         <br />
                         <p style={{ height: '40px' }} className="text-sm text-white font-light">Owner: {nft.owner}</p>
                         <br />
-                        <p style={{ height: '40px' }} className="text-white font-light">Sold: {nft.sold}</p>
-                      </div>
-                      <div className="p-4 bg-black">
-                        <p className="text-2xl font-light text-white">Price - {nft.price} ETH</p>
-                      </div>
-                      <div className="lg:grid grid-cols-2 gap-4">
-                        <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Set Auction</button>
-                        <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowTransferModal(true)}>Transfer</button>
+                        <p style={{ height: '40px' }} className="text-sm text-white font-light">Sold: Yes</p>
                       </div>
                     </div>
+
                   ))
                 }
               </div>
             </div>
           )
         }
+        <br />
+        <br />
         </div>
+
         <div>
         {showModal ? (
           <>
@@ -287,6 +288,7 @@ export default function Inventory() {
           </>
         ) : null}
         </div>
+
         <CybornFooter />
     </div>
   )
