@@ -47,7 +47,7 @@ export default function Inventory() {
     let tx = await transaction.wait()
     let event = tx.events[0]
     let value = event.args[2]
-    let tokenId = value.toNumber()
+
     const price = ethers.utils.parseUnits(formInput.bid, 'ether')
 
     contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ADDRESS, signer)
