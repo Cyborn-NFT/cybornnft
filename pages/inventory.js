@@ -28,7 +28,6 @@ export default function Inventory() {
       startTime , endTime, currenBid: bid
     })
     try {
-      const added = await client.add(data)
       createAuction()
     } catch (error) {
       console.log('Error uploading Auction Data: ', error)
