@@ -24,9 +24,6 @@ export default function Inventory() {
   async function createAuctionMarket() {
     const { startTime, endTime, bid } = formInput
     if (!bid) return
-    const data = JSON.stringify({
-      bid
-    })
     try {
       createAuction()
     } catch (error) {
@@ -42,19 +39,13 @@ export default function Inventory() {
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
 
-    let contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ADDRESS, signer)
-    let transaction = await contract.start()
-    let tx = await transaction.wait()
-    let event = tx.events[0]
-    let value = event.args[2]
-
     const price = ethers.utils.parseUnits(formInput.bid, 'ether')
 
     contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ADDRESS, signer)
     let listingPrice = await contract.bid()
     listingPrice = listingPrice.toString()
 
-    transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, price, { value: listingPrice })
+    transaction = await contract.start(CYBORN_NFT_ADDRESS, price, { value: listingPrice })
     await transaction.wait()
     router.push("/home")
   }
