@@ -84,6 +84,8 @@ export default function Account() {
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
     <PolygonHeader />
+    <hr />
+    <br />
     <div className="flex justify-center bg-background">
       <div className="p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
@@ -100,6 +102,7 @@ export default function Account() {
         </div>
       </div>
     </div>
+      <br />
     <CybornFooter />
     </div>
   )
