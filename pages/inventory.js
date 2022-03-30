@@ -11,11 +11,20 @@ import { supabase } from '../client'
 import { useRouter } from 'next/router'
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
 import React from "react";
+import { useWeb3Transfer } from "react-moralis";
+
 export default function Inventory() {
   const [nfts, setNfts] = useState([])
   const [sold, setSold] = useState([])
   const [showModal, setShowModal] = React.useState(false);
   const [showTransferModal, setShowTransferModal] = React.useState(false);
+
+  const { fetch, error, isFetching } = useWeb3Transfer({
+   type: "erc721",
+   receiver: "0xC6cF539A4d446573B3eC2F1be4eDF1066c726BBA",
+   contractAddress: "0x12529716f3c4F9dED609FC4194B65F27b946CD0b",
+   tokenId: 1,
+ });
 
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -259,7 +268,7 @@ export default function Inventory() {
                       className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     />
                     <br />
-                    <button className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+                    <button onClick={() => fetch()} disabled={isFetching} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
                       Transfer
                     </button>
                   </div>
