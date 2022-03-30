@@ -54,7 +54,7 @@ export default function Inventory() {
     let listingPrice = await contract.bid()
     listingPrice = listingPrice.toString()
 
-    transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, tokenId, price, { value: listingPrice })
+    transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, price, { value: listingPrice })
     await transaction.wait()
     router.push("/home")
   }
