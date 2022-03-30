@@ -8,7 +8,7 @@ import Web3Modal from "web3modal";
 import { supabase } from '../client'
 import { useRouter } from "next/router";
 
-function CybornHeader(){
+function PolygonHeader(){
     const [active, setActive] = useState(false);
 
     const handleClick = () => {
@@ -33,9 +33,9 @@ function CybornHeader(){
     setUserAddress(addr.toString());
 
     const {chainId} = await web3Provider.getNetwork();
-    if(chainId !== 4){
-      window.alert("Change Network To Rinkeby Test Network");
-      throw new Error("Change Network to Rinkeby Test Network");
+    if(chainId !== 80001){
+      window.alert("Change Network To Mumbai Test Network");
+      throw new Error("Change Network to Mumbai Test Network");
     }
 
     if(needSigner){
@@ -114,22 +114,22 @@ function CybornHeader(){
          }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
        >
          <div className="lg:text-base lg:inline-flex md:space-x-0 md:mt-0 md:text-sm lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto">
-           <Link href="/home">
+           <Link href="/polygon/home">
              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">
                Explore NFT
              </a>
            </Link>
-           <Link href="/create">
+           <Link href="/polygon/create">
              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white">
                List NFT
              </a>
            </Link>
-           <Link href="/inventory">
+           <Link href="/polygon/inventory">
              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white">
                Inventory
              </a>
            </Link>
-           <Link href="/account">
+           <Link href="/polygon/account">
              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white">
                Account
              </a>
@@ -146,8 +146,8 @@ function CybornHeader(){
          </button>
             &nbsp;
                &nbsp;
-               <button type="button" onClick={()=> router.push("/polygon/home")} className="text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center">
-                  Switch To Polygon
+               <button type="button" onClick={()=> router.push("/home")} className="text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center">
+                  &nbsp; Switch To ETH
                </button>
                &nbsp;
                   &nbsp;
@@ -159,4 +159,4 @@ function CybornHeader(){
   )
 }
 
-export default CybornHeader;
+export default PolygonHeader;

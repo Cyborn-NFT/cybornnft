@@ -2,7 +2,7 @@ import React from "react"
 import {  toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import Head from 'next/head'
-import CybornHeader from "/components/CybornHeader"
+import PolygonHeader from "/components/PolygonHeader"
 import CybornFooter from "/components/CybornFooter"
 import { useState, useEffect } from 'react'
 import { ethers } from 'ethers'
@@ -11,10 +11,10 @@ import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 import Link from 'next/link'
 import Image from 'next/image'
-import { supabase } from '../client'
+import { supabase } from '/client'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
-import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
+import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/polygon'
 
 
 
@@ -30,14 +30,14 @@ function Create(){
   async function fetchProfile() {
     const profileData = await supabase.auth.user()
     if (!profileData) {
-      router.push('/signin')
+      router.push('/polygon/signin')
     } else {
       setProfile(profileData)
     }
   }
   async function signOut() {
     await supabase.auth.signOut()
-    router.push('/signin')
+    router.push('/polygon/signin')
   }
   if (!profile) return null
 
@@ -91,11 +91,11 @@ function Create(){
 
     transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, tokenId, price, { value: listingPrice })
     await transaction.wait()
-    router.push("/home")
+    router.push("/polygon/home")
   }
   return(
     <div>
-    <CybornHeader />
+    <PolygonHeader />
     <hr />
     <div className="h-screen font-Ubuntu w-screen antialiased">
           <ToastContainer position="top-left"
@@ -133,7 +133,7 @@ function Create(){
               />
                 <br />
               <input
-                placeholder="Asset Price in ETH"
+                placeholder="Asset Price in Matic"
                 className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
 
@@ -142,13 +142,12 @@ function Create(){
               <input
                 placeholder="Set Royalty (Max Limit 3%)"
                 className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                 min="0" max="3"
 
               />
               <br />
               <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select your protocol</label>
               <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option>Ethereum</option>
+                <option>Polygon</option>
               </select>
               <br />
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload file</label>

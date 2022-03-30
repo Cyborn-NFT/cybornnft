@@ -4,12 +4,12 @@ import axios from 'axios'
 import Web3Modal from "web3modal"
 import Link from 'next/link'
 import Image from 'next/image'
-import CybornHeader from "/components/CybornHeader"
+import PolygonHeader from "/components/PolygonHeader"
 import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
-import { supabase } from '../client'
+import { supabase } from '/client'
 import { useRouter } from 'next/router'
-import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
+import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/polygon'
 import React from "react";
 export default function Inventory() {
   const [nfts, setNfts] = useState([])
@@ -29,20 +29,20 @@ export default function Inventory() {
   async function fetchProfile() {
     const profileData = await supabase.auth.user()
     if (!profileData) {
-      router.push('/signin')
+      router.push('/polygon/signin')
     } else {
       setProfile(profileData)
     }
   }
   async function signOut() {
     await supabase.auth.signOut()
-    router.push('/signin')
+    router.push('/polygon/signin')
   }
   if (!profile) return null
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
-      network: "rinkeby",
+      network: "mumbai",
       cacheProvider: true,
     })
     const connection = await web3Modal.connect()
@@ -78,7 +78,7 @@ export default function Inventory() {
     <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
-  </Head><CybornHeader /><hr /><br /><br /><br /><br /><p className="text-white text-center text-6xl">No NFTs Created By You</p><br /><br /><br /><br /><hr /><CybornFooter /></div>)
+  </Head><PolygonHeader /><hr /><br /><br /><br /><br /><p className="text-white text-center text-6xl">No NFTs Created By You</p><br /><br /><br /><br /><hr /><CybornFooter /></div>)
   return (
     <div>
     <Head>
@@ -88,7 +88,7 @@ export default function Inventory() {
       <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
-    <CybornHeader />
+    <PolygonHeader />
     <hr />
       <div className="p-4 bg-background">
         <h2 className="text-6xl text-white py-2">Items Created</h2>
@@ -105,7 +105,7 @@ export default function Inventory() {
                 <p style={{ height: '40px' }} className="text-white font-light">Sold: {nft.sold}</p>
                 </div>
                 <div className="p-4 bg-blue-400">
-                  <p className="text-xl font-medium text-black">Price - {nft.price} ETH</p>
+                  <p className="text-xl font-medium text-black">Price - {nft.price} Matic</p>
                 </div>
                 <div className="lg:grid grid-cols-2 gap-4">
                   <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Set Auction</button>
