@@ -93,8 +93,8 @@ export default function Account() {
             nfts.map((nft, i) => (
               <div key={i} className="border shadow rounded-xl overflow-hidden">
                 <img src={nft.image} className="rounded" />
-                <div className="p-4 bg-black">
-                  <p className="text-2xl font-bold text-white bg-gradient-to-l from-indigo-500 to-bg-purple-400">Price - {nft.price} Matic</p>
+                <div className="p-4 bg-cybornheader">
+                  <p className="text-2xl font-bold text-white">Price - {nft.price} Matic</p>
                 </div>
               </div>
             ))
