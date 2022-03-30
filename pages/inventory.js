@@ -23,9 +23,9 @@ export default function Inventory() {
 
   async function createAuctionMarket() {
     const { startTime, endTime, bid } = formInput
-    if (!startTime || !endTime || !bid) return
+    if (!bid) return
     const data = JSON.stringify({
-      startTime , endTime, currenBid: bid
+      bid
     })
     try {
       createAuction()
