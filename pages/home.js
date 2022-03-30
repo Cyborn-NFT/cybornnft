@@ -105,7 +105,7 @@ export default function Home() {
                 <div className="p-4 bg-cybornheader">
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Seller: {nft.seller}</p>
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Owner: {nft.owner}</p>
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/polygon/${nft.seller}/${nft.tokenId}`}</p>
+                <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}</p>
                   <p className="text-xl mb-4 font-bold text-white">{nft.price} ETH</p>
                   <button className="w-full bg-blue-400 text-black font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
                 </div>
