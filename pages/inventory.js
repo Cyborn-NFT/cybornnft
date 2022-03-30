@@ -9,13 +9,59 @@ import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
 import { supabase } from '../client'
 import { useRouter } from 'next/router'
-import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
+import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
 import React from "react";
 export default function Inventory() {
   const [nfts, setNfts] = useState([])
   const [sold, setSold] = useState([])
   const [showModal, setShowModal] = React.useState(false);
   const [showTransferModal, setShowTransferModal] = React.useState(false);
+
+
+  const [formInput, updateFormInput] = useState({ startTime: '', endTime: '', bid: '' })
+
+
+  async function createAuctionMarket() {
+    const { startTime, endTime, bid } = formInput
+    if (!startTime || !endTime || !bid) return
+    const data = JSON.stringify({
+      startTime , endTime, currenBid: bid
+    })
+    try {
+      const added = await client.add(data)
+      createAuction()
+    } catch (error) {
+      console.log('Error uploading Auction Data: ', error)
+    }
+  }
+
+
+
+  async function createAuction() {
+    const web3Modal = new Web3Modal()
+    const connection = await web3Modal.connect()
+    const provider = new ethers.providers.Web3Provider(connection)
+    const signer = provider.getSigner()
+
+    let contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ADDRESS, signer)
+    let transaction = await contract.start()
+    let tx = await transaction.wait()
+    let event = tx.events[0]
+    let value = event.args[2]
+    let tokenId = value.toNumber()
+    const price = ethers.utils.parseUnits(formInput.bid, 'ether')
+
+    contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ADDRESS, signer)
+    let listingPrice = await contract.bid()
+    listingPrice = listingPrice.toString()
+
+    transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, tokenId, price, { value: listingPrice })
+    await transaction.wait()
+    router.push("/home")
+  }
+
+
+
 
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -179,33 +225,35 @@ export default function Inventory() {
                     <textarea
                       placeholder="Start Auction Price"
                       className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={e => updateFormInput({ ...formInput, bid: e.target.value })}
                     />
                       <br />
                     <input
                       placeholder="End Auction Price"
                       className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+
                     />
                     <br />
                     <div class="relative">
                       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                       </div>
-                      <input datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction Start date" />
+                      <input datepicker onChange={e => updateFormInput({ ...formInput, startTime: e.target.value })} type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction Start date" />
                     </div>
                     <br />
                     <div class="relative">
                       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                       </div>
-                      <input datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction End date" />
+                      <input onChange={e => updateFormInput({ ...formInput, endTime: e.target.value })} datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction End date" />
                     </div>
                     <br />
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload file</label>
                       <input name="Asset" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="file" />
                       <div className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Your Uploaded will be shown below*</div>
                       <br />
-                    <button className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
-                      Create NFT
+                    <button onClick={createAuctionMarket} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+                      Start Auction
                     </button>
                   </div>
 
