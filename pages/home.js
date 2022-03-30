@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import Web3Modal from "web3modal"
 import Link from 'next/link'
@@ -10,8 +10,10 @@ import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
 import { supabase } from '../client'
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
-
-
+import { TelegramShareButton, TelegramIcon } from "next-share";
+import { TwitterShareButton, TwitterIcon } from "next-share";
+import { FaTelegramPlane, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { WhatsappShareButton, WhatsappButton} from "next-share";
 
 export default function Home() {
   const router = useRouter();
@@ -20,6 +22,56 @@ export default function Home() {
   useEffect(() => {
     loadNFTs()
   }, [])
+
+
+  const useCopyToClipboard = (text) => {
+    const copyToClipboard = (str) => {
+      const el = document.createElement("textarea");
+      el.value = str;
+      el.setAttribute("readonly", "");
+      document.body.appendChild(el);
+      const selected =
+        document.getSelection().rangeCount > 0
+          ? document.getSelection().getRangeAt(0)
+          : false;
+      el.select();
+      const success = document.execCommand("copy");
+      document.body.removeChild(el);
+      if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+      }
+      return success;
+    };
+
+    const [copied, setCopied] = React.useState(false);
+
+    const copy = React.useCallback(() => {
+      if (!copied) setCopied(copyToClipboard(text));
+    }, [text]);
+    React.useEffect(() => () => setCopied(false), [text]);
+
+    return [copied, copy];
+  };
+
+  const TextCopy = (props) => {
+    const [copied, copy] = useCopyToClipboard("");
+    return (
+      <div>
+        <button
+          onClick={copy}
+          className="bg-white p-4 flex items-center shadow-glow"
+        >
+          <div className="mr-2" />
+          <span>mint.kleoverse.com/nft</span>
+        </button>
+        <div className="text-white mt-1">
+          {copied && "💡 Link Copied! "}
+        </div>
+      </div>
+    );
+  };
+
 
   const [profile, setProfile] = useState(null)
   useEffect(() => {
@@ -106,6 +158,44 @@ export default function Home() {
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Seller: {nft.seller}</p>
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Owner: {nft.owner}</p>
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}</p>
+                  <div className="grid grid-cols-3 gap-2 items-center ">
+                    <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
+                      <div className="">
+                        <TelegramShareButton
+                           url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                           title={"Here's my NFT Link"}
+                        >
+                        <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
+
+                        </TelegramShareButton>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                      <div className="">
+                        <TwitterShareButton
+                          url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                          title={"Here's my NFT Link"}
+                          >
+                            <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
+
+                        </TwitterShareButton>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                      <div className="">
+                      <WhatsappShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                      >
+                      <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
+                      </WhatsappShareButton>
+                      </div>
+                    </div>
+                  </div>
+
+
                   <p className="text-xl mb-4 font-bold text-white">{nft.price} ETH</p>
                   <button className="w-full bg-blue-400 text-black font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
                 </div>
