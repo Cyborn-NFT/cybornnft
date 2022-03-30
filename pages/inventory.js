@@ -269,7 +269,7 @@ export default function Inventory() {
                     />
                     <br />
                     <button onClick={() => fetch()} disabled={isFetching} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
-                      Transferr
+                      Transfer
                     </button>
                   </div>
 
