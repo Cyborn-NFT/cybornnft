@@ -81,7 +81,7 @@ export default function SignIn() {
   return (
     <div>
     <Head>
-      <title>Cyborn Web3</title>
+      <title>Cyborn</title>
       <meta name="description" content="Cyborn Blockchain" />
       <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
       <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
