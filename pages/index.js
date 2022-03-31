@@ -133,6 +133,13 @@ function Home() {
   if (submitted) {
     return (
       <div>
+      <Head>
+        <title>Cyborn</title>
+        <meta name="description" content="Cyborn Blockchain" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/ark.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/ark.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
+      </Head>
       <IndexHeader />
       <hr />
       <div className="flex items-center flex-col justify-center lg:flex-row py-28 px-6 md:px-24 md:py-20 lg:py-32 gap-16 lg:gap-28">
