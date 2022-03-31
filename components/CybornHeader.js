@@ -59,7 +59,7 @@ function CybornHeader(){
   useEffect(() => {
     if (!walletConnected) {
       web3ModalRef.current = new Web3Modal({
-        network: "matic",
+        network: "rinkeby",
         providerOptions: {},
         disableInjectedProvider: false,
       });

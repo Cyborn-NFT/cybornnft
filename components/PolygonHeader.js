@@ -59,7 +59,7 @@ function PolygonHeader(){
   useEffect(() => {
     if (!walletConnected) {
       web3ModalRef.current = new Web3Modal({
-        network: "matic",
+        network: "mumbai",
         providerOptions: {},
         disableInjectedProvider: false,
       });
