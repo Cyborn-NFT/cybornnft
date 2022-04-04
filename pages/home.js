@@ -14,6 +14,9 @@ import { TelegramShareButton, TelegramIcon } from "next-share";
 import { TwitterShareButton, TwitterIcon } from "next-share";
 import { FaTelegramPlane, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { WhatsappShareButton, WhatsappButton} from "next-share";
+import Swal from 'sweetalert2';
+import withReactContent from "sweetalert2-react-content";
+
 
 export default function Home() {
   const router = useRouter();
@@ -22,6 +25,16 @@ export default function Home() {
   useEffect(() => {
     loadNFTs()
   }, [])
+
+  const MySwal = withReactContent(Swal);
+  const open = () => {
+    MySwal.fire({
+      title: 'You have successfully bought this NFT',
+      text: 'Share with your audience',
+      background:'#04111d',
+      icon: 'success',
+    });
+  };
 
 
   const useCopyToClipboard = (text) => {
@@ -128,6 +141,7 @@ export default function Home() {
       value: price
     })
     await transaction.wait()
+    open();
     loadNFTs()
   }
   if (loadingState === 'loaded' && !nfts.length) return (<div><CybornHeader /><h1 className="px-20 py-10 text-3xl">No items in marketplace</h1><CybornFooter /></div>)
