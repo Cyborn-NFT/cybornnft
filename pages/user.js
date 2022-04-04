@@ -9,115 +9,25 @@ import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
 import { supabase } from '../client'
 import { useRouter } from 'next/router'
-import Avatar from "./Avatar"
+import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
+import React from "react";
 import { TelegramShareButton, TelegramIcon } from "next-share";
 import { TwitterShareButton, TwitterIcon } from "next-share";
 import { FaTelegramPlane, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { WhatsappShareButton, WhatsappButton} from "next-share";
-import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
-import React from "react";
-export default function Seller() {
+
+
+export default function User() {
   const [nfts, setNfts] = useState([])
   const [sold, setSold] = useState([])
   const [showModal, setShowModal] = React.useState(false);
   const [showTransferModal, setShowTransferModal] = React.useState(false);
-  const [userSettingModal, setUserSettingModal] = React.useState(false);
+
   const [loadingState, setLoadingState] = useState('not-loaded')
-
-  const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
-
-  const [session, setSession] = useState(null)
-
-  useEffect(() => {
-    setSession(supabase.auth.session())
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
-
-  useEffect(() => {
-    getProfile()
-  }, [session])
-
-  async function getProfile() {
-    try {
-      setLoading(true)
-      const user = supabase.auth.user()
-
-      let { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', user.id)
-        .single()
-
-      if (error && status !== 406) {
-        throw error
-      }
-
-      if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function updateProfile({ username, website, avatar_url }) {
-    try {
-      setLoading(true)
-      const user = supabase.auth.user()
-
-      const updates = {
-        id: user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date(),
-      }
-
-      let { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      })
-
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
     loadNFTs()
   }, [])
   const router = useRouter()
-  const [profile, setProfile] = useState(null)
-  useEffect(() => {
-    fetchProfile()
-  }, [])
-  async function fetchProfile() {
-    const profileData = await supabase.auth.user()
-    if (!profileData) {
-      router.push('/signin')
-    } else {
-      setProfile(profileData)
-    }
-  }
-  async function signOut() {
-    await supabase.auth.signOut()
-    router.push('/signin')
-  }
-  if (!profile) return null
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
@@ -151,6 +61,7 @@ export default function Seller() {
     setNfts(items)
     setLoadingState('loaded')
   }
+
 
   async function buyNft(nft) {
     const web3Modal = new Web3Modal()
@@ -186,25 +97,8 @@ export default function Seller() {
     </Head>
     <CybornHeader />
     <hr />
-      <div className="p-16 bg-background">
-        <div className="lg:grid grid-cols-4">
-          <div>
-            <img width={100} height={100} className="rounded-full" src={`https://cgpgvbeatwfizpzzaned.supabase.co/storage/v1/object/public/avatars/${avatar_url}`} />
-            <h1 className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">{username}</h1>
-            <Link href={`${website}`}>
-              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">
-                Website
-              </a>
-            </Link>
-            <Link href={`/profile/${nfts.seller}`}>
-              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">
-                Share
-              </a>
-            </Link>
-            <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setUserSettingModal(true)}>Update Profile</button>
-          </div>
-
-        </div>
+      <div className="p-4 bg-background">
+        <h2 className="text-6xl text-white py-2">Items Created</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
@@ -213,12 +107,15 @@ export default function Seller() {
                 <div className="p-4 bg-black">
                 <p style={{ height: '40px' }} className="text-sm text-white font-semibold">Seller: {nft.seller}</p>
                 <br />
+                <p style={{ height: '40px' }} className="text-sm text-white font-light">Owner: {nft.owner}</p>
+                <br />
+                <p style={{ height: '40px' }} className="text-white font-light">Sold: {nft.sold}</p>
                 </div>
                 <div className="p-4 bg-blue-400">
                   <p className="text-xl font-medium text-black">Price - {nft.price} ETH</p>
                 </div>
                 <br />
-                <div className="grid grid-cols-3 gap-2 items-center bg-cybornheader p-8">
+                <div className="grid grid-cols-3 gap-2 items-center ">
                   <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
                     <div className="">
                       <TelegramShareButton
@@ -262,6 +159,40 @@ export default function Seller() {
           }
         </div>
       </div>
+        <div className="px-4">
+        {
+          Boolean(sold.length) && (
+            <div>
+              <h2 className="text-2xl py-2">Items sold</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                {
+                  sold.map((nft, i) => (
+                    <div key={i} className="border shadow rounded-xl overflow-hidden">
+                      <img src={nft.image} className="rounded" />
+                      <div className="p-4 bg-black">
+                        <p style={{ height: '40px' }} className="text-sm text-white font-semibold">Seller: {nft.seller}</p>
+                        <br />
+                        <p style={{ height: '40px' }} className="text-sm text-white font-light">Owner: {nft.owner}</p>
+                        <br />
+                        <p style={{ height: '40px' }} className="text-white font-light">Sold: Yes</p>
+                      </div>
+                      <div className="p-4 bg-black">
+                        <p className="text-2xl font-light text-white">Price - {nft.price} ETH</p>
+                      </div>
+                      <div className="lg:grid grid-cols-2 gap-4">
+                        <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Set Auction</button>
+                        <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowTransferModal(true)}>Transfer</button>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          )
+        }
+        <br />
+        <br />
+        </div>
         <div>
         {showModal ? (
           <>
@@ -319,7 +250,7 @@ export default function Seller() {
                       <div className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Your Uploaded will be shown below*</div>
                       <br />
                     <button className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
-                      Start Auction
+                      Create NFT
                     </button>
                   </div>
 
@@ -401,100 +332,6 @@ export default function Seller() {
           </>
         ) : null}
         </div>
-
-
-
-        {userSettingModal ? (
-          <>
-            <div
-              className="justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            >
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none">
-                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold text-white">
-                      User Profile
-                    </h3>
-                    <button
-                      className="p-1 ml-auto bg-transparent border-0 text-white opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                      onClick={() => setUserSettingModal(false)}
-                    >
-                      <span className="bg-black text-white h-6 w-6 text-3xl block">
-                        ×
-                      </span>
-                    </button>
-                  </div>
-
-                <div className="form-widget">
-                  <div>
-                  <br />
-                    <Avatar
-                       url={avatar_url}
-                       size={150}
-                       onUpload={(url) => {
-                         setAvatarUrl(url)
-                         updateProfile({ username, website, avatar_url: url })
-                       }}
-                     />
-                  </div>
-                  <div>
-                  <br />
-                    <label className="text-white" htmlFor="email">Email</label>
-                    <input id="email" type="text" className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" value={session.user.email} disabled />
-                  </div>
-                  <br />
-                  <div>
-                    <label className="text-white" htmlFor="username">Name</label>
-                    <input
-                      id="username"
-                      type="text"
-                      className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      value={username || ''}
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                  <br />
-                    <label className="text-white" htmlFor="website">Website</label>
-
-                    <input
-                      id="website"
-                      className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      type="website"
-                      value={website || ''}
-                      onChange={(e) => setWebsite(e.target.value)}
-                    />
-                  </div>
-                  <br />
-                  <div>
-                    <button
-                      className="button block primary block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring"
-                      onClick={() => updateProfile({ username, website, avatar_url })}
-                      disabled={loading}
-                    >
-                      {loading ? 'Loading ...' : 'Update'}
-                    </button>
-                  </div>
-                </div>
-                <br />
-                  </div>
-
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                    <button
-                      className="text-red-500 bg-blue-500 rounded font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setUserSettingModal(false)}
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-          </>
-        ) : null}
-
         <CybornFooter />
     </div>
   )

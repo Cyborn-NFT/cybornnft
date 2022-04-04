@@ -7,9 +7,9 @@ import Image from 'next/image'
 import CybornHeader from "/components/CybornHeader"
 import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
-import { supabase } from '../client'
+import { supabase } from '/client'
 import { useRouter } from 'next/router'
-import Avatar from "./Avatar"
+import Avatar from "../Avatar"
 import { TelegramShareButton, TelegramIcon } from "next-share";
 import { TwitterShareButton, TwitterIcon } from "next-share";
 import { FaTelegramPlane, FaTwitter, FaWhatsapp } from "react-icons/fa";
@@ -31,93 +31,11 @@ export default function Seller() {
 
   const [session, setSession] = useState(null)
 
-  useEffect(() => {
-    setSession(supabase.auth.session())
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
-
-  useEffect(() => {
-    getProfile()
-  }, [session])
-
-  async function getProfile() {
-    try {
-      setLoading(true)
-      const user = supabase.auth.user()
-
-      let { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', user.id)
-        .single()
-
-      if (error && status !== 406) {
-        throw error
-      }
-
-      if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function updateProfile({ username, website, avatar_url }) {
-    try {
-      setLoading(true)
-      const user = supabase.auth.user()
-
-      const updates = {
-        id: user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date(),
-      }
-
-      let { error } = await supabase.from('profiles').upsert(updates, {
-        returning: 'minimal', // Don't return the value after inserting
-      })
-
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   useEffect(() => {
     loadNFTs()
   }, [])
   const router = useRouter()
-  const [profile, setProfile] = useState(null)
-  useEffect(() => {
-    fetchProfile()
-  }, [])
-  async function fetchProfile() {
-    const profileData = await supabase.auth.user()
-    if (!profileData) {
-      router.push('/signin')
-    } else {
-      setProfile(profileData)
-    }
-  }
-  async function signOut() {
-    await supabase.auth.signOut()
-    router.push('/signin')
-  }
-  if (!profile) return null
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
@@ -187,25 +105,7 @@ export default function Seller() {
     <CybornHeader />
     <hr />
       <div className="p-16 bg-background">
-        <div className="lg:grid grid-cols-4">
-          <div>
-            <img width={100} height={100} className="rounded-full" src={`https://cgpgvbeatwfizpzzaned.supabase.co/storage/v1/object/public/avatars/${avatar_url}`} />
-            <h1 className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">{username}</h1>
-            <Link href={`${website}`}>
-              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">
-                Website
-              </a>
-            </Link>
-            <Link href={`/profile/${nfts.seller}`}>
-              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white ">
-                Share
-              </a>
-            </Link>
-            <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setUserSettingModal(true)}>Update Profile</button>
-          </div>
-
-        </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
               <div key={i} className="rounded-xl overflow-hidden">
