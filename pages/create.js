@@ -163,7 +163,7 @@ function Create(){
         </div>
         <div className="flex-1 shrink-0">
           <div className="flex-1 shrink-0 h-full w-full object-cover md:h-full">
-
+          
 
           {
             fileUrl && (

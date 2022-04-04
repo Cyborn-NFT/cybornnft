@@ -23,6 +23,9 @@ function CybornHeader(){
   const[walletConnected, setWalletConnected] = useState(false);
   const [userAddress, setUserAddress] = useState("");
 
+  const [nfts, setNfts] = useState([])
+  const [loadingState, setLoadingState] = useState('not-loaded')
+
   const web3ModalRef = useRef();
 
   const getProviderOrSigner = async(needSigner = false) =>{
@@ -81,6 +84,39 @@ function CybornHeader(){
       }
     }
 
+    async function loadNFTs() {
+      const web3Modal = new Web3Modal({
+        network: "rinkeby",
+        cacheProvider: true,
+      })
+      const connection = await web3Modal.connect()
+      const provider = new ethers.providers.Web3Provider(connection)
+      const signer = provider.getSigner()
+
+      const marketContract = new ethers.Contract(CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, signer)
+      const tokenContract = new ethers.Contract(CYBORN_NFT_ADDRESS, CYBORN_NFT_ABI, provider)
+      const data = await marketContract.fetchItemsCreated()
+
+      const items = await Promise.all(data.map(async i => {
+        const tokenUri = await tokenContract.tokenURI(i.tokenId)
+        const meta = await axios.get(tokenUri)
+        let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+        let item = {
+          price,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          owner: i.owner,
+          sold: i.sold,
+          image: meta.data.image,
+        }
+        return item
+      }))
+      const soldItems = items.filter(i => i.sold)
+      setSold(soldItems)
+      setNfts(items)
+      setLoadingState('loaded')
+    }
+
   return(
     <nav className='flex items-center p-3 flex-wrap bg-black'>
 
@@ -134,6 +170,12 @@ function CybornHeader(){
                Account
              </a>
            </Link>
+           <Link href={"/seller"}>
+             <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white">
+               Profile
+             </a>
+           </Link>
+
             <p>
              <p className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:text-white">
                Wallet: {userAddress}
