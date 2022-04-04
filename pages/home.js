@@ -30,7 +30,7 @@ export default function Home() {
   const open = () => {
     MySwal.fire({
       title: 'You have successfully bought this NFT',
-      text: 'Share with your audience',
+      text: 'Check your inventory & Share it with your audience',
       background:'#04111d',
       icon: 'success',
     });
@@ -177,7 +177,7 @@ export default function Home() {
                       <div className="">
                         <TelegramShareButton
                            url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
-                           title={"Here's my NFT Link"}
+                           title={"Here's my NFT Link, if you are interested you can buy it through this link"}
                         >
                         <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
 
@@ -189,7 +189,7 @@ export default function Home() {
                       <div className="">
                         <TwitterShareButton
                           url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
-                          title={"Here's my NFT Link"}
+                          title={"Here's my NFT Link, if you are interested you can buy it through this link"}
                           >
                             <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
 
@@ -200,8 +200,8 @@ export default function Home() {
                     <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
                       <div className="">
                       <WhatsappShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                        title={"Here's my NFT Link, if you are interested you can buy it through this link"}
                       >
                       <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
                       </WhatsappShareButton>

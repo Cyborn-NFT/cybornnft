@@ -179,9 +179,41 @@ export default function Inventory() {
                       <div className="p-4 bg-black">
                         <p className="text-2xl font-light text-white">Price - {nft.price} ETH</p>
                       </div>
-                      <div className="lg:grid grid-cols-2 gap-4">
-                        <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Set Auction</button>
-                        <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowTransferModal(true)}>Transfer</button>
+                      <div className="grid grid-cols-3 gap-2 items-center ">
+                        <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
+                          <div className="">
+                            <TelegramShareButton
+                               url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                               title={"Here's my NFT that I have bought from Cyborn NFT Marketplace"}
+                            >
+                            <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
+
+                            </TelegramShareButton>
+                          </div>
+                        </div>
+
+                        <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                          <div className="">
+                            <TwitterShareButton
+                              url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                              title={"Here's my NFT that I have bought from Cyborn NFT Marketplace"}
+                              >
+                                <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
+
+                            </TwitterShareButton>
+                          </div>
+                        </div>
+
+                        <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                          <div className="">
+                          <WhatsappShareButton
+                            url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                            title={"Here's my NFT that I have bought from Cyborn NFT Marketplace"}
+                          >
+                          <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
+                          </WhatsappShareButton>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))
