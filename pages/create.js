@@ -1,6 +1,4 @@
 import React from "react"
-import {  toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
 import Head from 'next/head'
 import CybornHeader from "/components/CybornHeader"
 import CybornFooter from "/components/CybornFooter"
@@ -11,8 +9,14 @@ import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 import Link from 'next/link'
 import Image from 'next/image'
+import nProgress from "nprogress";
+import Router from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import { supabase } from '../client'
+import withReactContent from "sweetalert2-react-content";
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
+
 
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI} from '/constants'
 
@@ -22,6 +26,27 @@ function Create(){
   const [fileUrl, setFileUrl] = useState(null)
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
   const router = useRouter()
+  const MySwal = withReactContent(Swal);
+
+  const open = () => {
+    MySwal.fire({
+      title: 'Successfully Listed Your NFT',
+      imageUrl: '{fileUrl}',
+      text: 'Share with your audience',
+      background:'#04111d',
+      icon: 'success',
+    });
+  };
+
+  const mintOpen = () => {
+    MySwal.fire({
+      title: 'Successfully minted Your NFT',
+      text: 'Proceed to list your NFT asset in the market',
+      background:'#04111d',
+      icon: 'success',
+      timer: 2500
+    });
+  };
 
   const [profile, setProfile] = useState(null)
   useEffect(() => {
@@ -79,10 +104,14 @@ function Create(){
 
     let contract = new ethers.Contract(CYBORN_NFT_ADDRESS, CYBORN_NFT_ABI, signer)
     let transaction = await contract.createToken(url)
+    Router.events.on("routeChangeStart", nProgress.start);
+    Router.events.on("routeChangeError", nProgress.done);
     let tx = await transaction.wait()
+    Router.events.on("routeChangeComplete", nProgress.done);
     let event = tx.events[0]
     let value = event.args[2]
     let tokenId = value.toNumber()
+    mintOpen();
     const price = ethers.utils.parseUnits(formInput.price, 'ether')
 
     contract = new ethers.Contract(CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, signer)
@@ -90,7 +119,11 @@ function Create(){
     listingPrice = listingPrice.toString()
 
     transaction = await contract.createMarketItem(CYBORN_NFT_ADDRESS, tokenId, price, { value: listingPrice })
+    Router.events.on("routeChangeStart", nProgress.start);
+    Router.events.on("routeChangeError", nProgress.done);
     await transaction.wait()
+    Router.events.on("routeChangeComplete", nProgress.done);
+    open();
     router.push("/home")
   }
   return(
@@ -98,15 +131,15 @@ function Create(){
     <CybornHeader />
     <hr />
     <div className="h-screen font-Ubuntu w-screen antialiased">
-          <ToastContainer position="top-left"
-      autoClose={1000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover/>
+      <ToastContainer position="top-left"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover/>
       <Head>
         <title>Cyborn</title>
         <meta name="description" content="Cyborn Blockchain" />
@@ -158,12 +191,15 @@ function Create(){
               <button onClick={createMarket} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
                 Create NFT
               </button>
+              <button onClick={open} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+                Create NFT
+              </button>
 
           </div>
         </div>
         <div className="flex-1 shrink-0">
           <div className="flex-1 shrink-0 h-full w-full object-cover md:h-full">
-          
+
 
           {
             fileUrl && (
