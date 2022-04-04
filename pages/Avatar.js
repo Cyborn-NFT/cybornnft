@@ -46,7 +46,7 @@ export default function Avatar({ url, size, onUpload }) {
 
       onUpload(filePath)
     } catch (error) {
-      alert(error.message)
+      console.log(error)
     } finally {
       setUploading(false)
     }

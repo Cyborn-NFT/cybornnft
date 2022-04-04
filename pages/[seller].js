@@ -64,7 +64,7 @@ export default function Seller() {
         setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
-      alert(error.message)
+      console.log(error)
     } finally {
       setLoading(false)
     }
@@ -91,7 +91,7 @@ export default function Seller() {
         throw error
       }
     } catch (error) {
-      alert(error.message)
+      console.log(error)
     } finally {
       setLoading(false)
     }

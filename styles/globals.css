@@ -18,3 +18,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+body::-webkit-scrollbar {
+  width: 12px;
+  height: 5px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #04111d;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid black;
+}
