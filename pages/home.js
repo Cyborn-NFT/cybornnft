@@ -38,11 +38,11 @@ export default function Home() {
 
   const mintOpen = () => {
     MySwal.fire({
-      title: 'Do not refresh or close this transaction,
-      text: 'Please wait until the transaction approved on-chain',
+      title: 'Do not refresh or close this transaction',
+      text: 'Please wait until this transaction approved on-chain',
       background:'#04111d',
       icon: 'success',
-      timer: 2500
+      timer: 4500
     });
 
 
@@ -149,6 +149,7 @@ export default function Home() {
     const transaction = await contract.createMarketSale(CYBORN_NFT_ADDRESS, nft.tokenId, {
       value: price
     })
+    mintOpen();
     await transaction.wait()
     open();
     loadNFTs()
