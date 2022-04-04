@@ -44,6 +44,7 @@ export default function Home() {
       icon: 'success',
       timer: 4500
     });
+  };
 
 
   const useCopyToClipboard = (text) => {
