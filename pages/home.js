@@ -36,6 +36,15 @@ export default function Home() {
     });
   };
 
+  const mintOpen = () => {
+    MySwal.fire({
+      title: 'Do not refresh or close this transaction,
+      text: 'Please wait until the transaction approved on-chain',
+      background:'#04111d',
+      icon: 'success',
+      timer: 2500
+    });
+
 
   const useCopyToClipboard = (text) => {
     const copyToClipboard = (str) => {

@@ -179,7 +179,8 @@ export default function Inventory() {
                       <div className="p-4 bg-black">
                         <p className="text-2xl font-light text-white">Price - {nft.price} ETH</p>
                       </div>
-                      <div className="grid grid-cols-3 gap-2 items-center ">
+                      <br />
+                      <div className="grid grid-cols-3 gap-2 items-center bg-cybornheader">
                         <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
                           <div className="">
                             <TelegramShareButton
@@ -215,6 +216,7 @@ export default function Inventory() {
                           </div>
                         </div>
                       </div>
+                      <br />
                     </div>
                   ))
                 }
