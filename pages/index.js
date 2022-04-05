@@ -307,8 +307,6 @@ function Home() {
   })}
 </div>
 </div>
-
-<hr />
 <CybornFooter />
     </div>
   )
