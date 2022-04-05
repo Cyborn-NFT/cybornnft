@@ -194,7 +194,7 @@ export default function Home() {
 
   if (loadingState === 'loaded' && !nfts.length) return (<div><CybornHeader /><h1 className="px-20 py-10 text-3xl">No items in marketplace</h1><CybornFooter /></div>)
   return (
-    <div className="bg-background">
+    <div className="">
     <Head>
       <title>Cyborn</title>
       <meta name="description" content="Cyborn Blockchain" />
@@ -203,10 +203,8 @@ export default function Home() {
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
     <CybornHeader />
-    <hr />
-    <br />
     <div className="flex justify-center">
-      <div className="px-4" style={{ maxWidth: '1200px' }}>
+      <div className="px-4 container-default">
         <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
@@ -270,9 +268,9 @@ export default function Home() {
     <br />
     <br />
 
-    <h1 className="text-white p-8 text-center bg-cybornheader text-6xl">Auctions</h1>
+    <h1 className="text-white p-8 text-center text-6xl">Auctions</h1>
     <div className="flex bg-cybornheader justify-center">
-      <div className="px-4" style={{ maxWidth: '1200px' }}>
+      <div className="px-4 container-default">
         <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nftz.map((nfte, i) => (
