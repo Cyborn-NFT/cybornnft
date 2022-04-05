@@ -194,7 +194,7 @@ function Home() {
         </div>
       </div>
     </div>
-    <section className="relative bg-background">
+    <section className="relative">
       <div className="container-default mx-auto">
         <div className="hidden sm:block sm:inset-0 sm:absolute"></div>
         <div className="relative max-w-screen-xl px-8 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
@@ -241,7 +241,7 @@ function Home() {
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
-                <div className="card-image-wrapper">
+                <div className="card-image-wrapper p-4">
                   <img src={nft.image} alt={nft.name} title={nft.name} />
                 </div>
                 <div className="p-4 card-content">
