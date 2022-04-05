@@ -280,6 +280,7 @@ export default function Home() {
                 <div className="p-4 bg-black">
                   <p style={{ height: '40px' }} className="text-2xl text-white font-semibold">{nfte.name}</p>
                   <p style={{ height: '40px' }} className="text-white font-light">{nfte.description}</p>
+              
                 </div>
                 <hr />
                 <div className="p-4 bg-black">
