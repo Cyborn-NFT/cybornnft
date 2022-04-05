@@ -169,8 +169,8 @@ footer .text-xs {
 }
 /* Card */
 .card {
-  background-color: #111626;
-  border-radius: 5px;
+  background-color: #131313;
+  border-radius: 20px;
   overflow: hidden;
   color: #A3A5B7;
   box-shadow: rgba(4, 17, 29, 0.75) 0px 0px 10px 0px;
@@ -199,4 +199,7 @@ footer .text-xs {
 .card-content .nft-price img.eth-logo {
   height: 18px;
   padding-bottom: 3px;
+}
+.card-image-wrapper > img {
+  border-radius: 10px;
 }
