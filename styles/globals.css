@@ -1,35 +1,202 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: #000;
+/* Animations */
+@-webkit-keyframes flowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
+@-moz-keyframes flowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
-* {
-  box-sizing: border-box;
+@keyframes flowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-
-body::-webkit-scrollbar {
-  width: 12px;
-  height: 5px;
+html, body {
+  font-family: 'Lexend', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #ffffff;
+  background-color: #03032D;
 }
-
-body::-webkit-scrollbar-track {
-  background: #04111d;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 700;
 }
-
-body::-webkit-scrollbar-thumb {
-  background-color: white;
-  border-radius: 20px;
-  border: 1px solid black;
+h1 {
+  font-size: 2.5em;
+}
+h2 {
+  font-size: 2em;
+}
+/* Navbar */
+.navbar {
+  background-color: transparent;
+}
+.navbar-logo > img {
+  height: 50px;
+  width: 100%;
+}
+.container-default {
+  max-width: 1400px;
+}
+.section.home-hero {
+  background-image: url('/home-hero-bg.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-origin: content-box;
+  padding: 3em;
+}
+.home-hero-content {
+  max-width: 740px;
+}
+.title.home-hero {
+  font-weight: 700;
+  font-size: 4.5em;
+  line-height: 1.2em;
+  text-align: center;
+}
+.paragraph.home-hero {
+  font-size: 1.5em;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.3em;
+}
+@media screen and (max-width: 767px) {
+  .section.home-hero {
+    padding: 1rem;
+    background-size: cover;
+  }
+  .title.home-hero {
+    font-size: 2.5em;
+  }
+}
+.gradient-text {
+  background-color: #e0dff1;
+  background-image: linear-gradient(95deg, #77f7ff 23.3%, #e762ba 65.89%);
+  background-size: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}
+.button {
+  display: inline-block;
+  line-height: 1;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 10px 20px 10px 20px;
+  transition: all .4s;
+}
+.button-lg {
+  padding: 20px 30px 20px 30px;
+}
+.button-primary {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  background-color: #FF72B5;
+}
+.button-primary:hover {
+  background-color: #c0005b;
+}
+.button-gradient {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(-45deg, #7e6af0, #7f54cb, #d732d7, #050545);
+  background-size: 800% 400%;
+  animation: flowGradient 10s infinite cubic-bezier(0.62, 0.28, 0.23, 0.99) both;
+  -webkit-animation: flowGradient 10s infinite cubic-bezier(0.62, 0.28, 0.23, 0.99) both;
+}
+.button-gradient:hover {
+  animation: flowGradient 3s infinite;
+  -webkit-animation: flowGradient 3s infinite;
+}
+/* Header */
+.nav-link {
+  font-weight: 600;
+  color: #ffffff;
+}
+.nav-link:hover, .footer-link-wrapper > a:hover {
+  transition: color 350ms ease;
+  color: #FF72B5;
+}
+/* Footer */
+footer {
+  background-color: #111626;
+  margin-top: 5rem;
+}
+.footer-container {
+  width: 80%;
+}
+footer h5.footer-header {
+  font-size: 1em;
+}
+footer .footer-link-list li a {
+  font-size: 0.9em;
+}
+footer .footer-link-wrapper {
+  margin-top: 0.5rem;
+}
+footer .text-xs {
+  font-size: 0.65em;
+}
+/* Card */
+.card {
+  background-color: #111626;
+  border-radius: 5px;
+  overflow: hidden;
+  color: #A3A5B7;
+  box-shadow: rgba(4, 17, 29, 0.75) 0px 0px 10px 0px;
+}
+.card:hover {
+  cursor: pointer;
+  box-shadow: rgba(4, 17, 29, 0.25) 0px 0px 5px 0px;
+  transform: translate3d(0px, 0px, 0px) scale3d(0.99, 0.99, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg);
+  transform-style: preserve-3d;
+  transition: all 0.1s ease 0s;
+}
+.card-title .nft-name {
+  font-size: .9em;
+  font-weight: 600;
+  color: #ffffff;
+}
+.card-title .nft-description {
+  font-size: .75em;
+  font-weight: 400;
+}
+.card-content .nft-price {
+  font-size: .8em;
+  color: #ffffff;
+  font-weight: 600;
+}
+.card-content .nft-price img.eth-logo {
+  height: 18px;
+  padding-bottom: 3px;
 }
