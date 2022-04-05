@@ -160,6 +160,11 @@ function CybornHeader(){
                List NFT
              </a>
            </Link>
+           <Link href="/Auction">
+             <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white">
+               Auction
+             </a>
+           </Link>
            <Link href="/inventory">
              <a className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:bg-background hover:text-white">
                Inventory

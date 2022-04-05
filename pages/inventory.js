@@ -8,20 +8,27 @@ import CybornHeader from "/components/CybornHeader"
 import CybornFooter from "/components/CybornFooter"
 import Head from "next/head";
 import { supabase } from '../client'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
 import React from "react";
 import { TelegramShareButton, TelegramIcon } from "next-share";
 import { TwitterShareButton, TwitterIcon } from "next-share";
 import { FaTelegramPlane, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { WhatsappShareButton, WhatsappButton} from "next-share";
-
+import withReactContent from "sweetalert2-react-content";
+import Swal from 'sweetalert2';
+import nProgress from "nprogress";
+import { create as ipfsHttpClient } from 'ipfs-http-client'
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 export default function Inventory() {
   const [nfts, setNfts] = useState([])
   const [sold, setSold] = useState([])
   const [showModal, setShowModal] = React.useState(false);
   const [showTransferModal, setShowTransferModal] = React.useState(false);
+  const [fileUrl, setFileUrl] = useState(null)
+  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
+  const MySwal = withReactContent(Swal);
 
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -45,6 +52,86 @@ export default function Inventory() {
     router.push('/signin')
   }
   if (!profile) return null
+
+
+
+  const open = () => {
+    MySwal.fire({
+      title: 'Successfully Listed Your NFT To Auction Platform',
+      imageUrl: '{fileUrl}',
+      text: 'Share with your audience',
+      background:'#04111d',
+      icon: 'success',
+    });
+  };
+
+  const mintOpen = () => {
+    MySwal.fire({
+      title: 'Successfully minted Your NFT',
+      text: 'Proceed to list your NFT asset in the market',
+      background:'#04111d',
+      icon: 'success',
+      timer: 2500
+    });
+  };
+
+
+
+  async function onChange(e) {
+    const file = e.target.files[0]
+    try {
+      const added = await client.add(
+        file,
+        {
+          progress: (prog) => console.log(`received: ${prog}`)
+        }
+      )
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      setFileUrl(url)
+    } catch (error) {
+      console.log('Error uploading file: ', error)
+    }
+  }
+  async function createAuction() {
+    const { name, description, price } = formInput
+    if (!name || !description || !price || !fileUrl) return
+    const data = JSON.stringify({
+      name, description, image: fileUrl
+    })
+    try {
+      const added = await client.add(data)
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      createTrade(url)
+    } catch (error) {
+      console.log('Error uploading file: ', error)
+    }
+  }
+
+  async function createTrade(url) {
+    const web3Modal = new Web3Modal()
+    const connection = await web3Modal.connect()
+    const provider = new ethers.providers.Web3Provider(connection)
+    const signer = provider.getSigner()
+
+    let contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ABI, signer)
+    let transaction = await contract.SimpleAuction(1547, "0xD0388ceC17c6a0D2D43e5FE8De0Bafb1d36CAFb3")
+    Router.events.on("routeChangeStart", nProgress.start);
+    Router.events.on("routeChangeError", nProgress.done);
+    let tx = await transaction.wait()
+    Router.events.on("routeChangeComplete", nProgress.done);
+    let event = tx.events[0]
+    open();
+    Router.events.on("routeChangeStart", nProgress.start);
+    Router.events.on("routeChangeError", nProgress.done);
+    Router.events.on("routeChangeComplete", nProgress.done);
+    router.push("/home")
+  }
+
+
+
+
+
+
 
   async function loadNFTs() {
     const web3Modal = new Web3Modal({
@@ -97,7 +184,11 @@ export default function Inventory() {
     <CybornHeader />
     <hr />
       <div className="p-4 bg-background">
-        <h2 className="text-6xl text-white py-2">Items Created</h2>
+      <br />
+      <br />
+        <h2 className="text-6xl text-white text-center py-2">Items Created</h2>
+        <br />
+        <br />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
@@ -108,13 +199,12 @@ export default function Inventory() {
                 <br />
                 <p style={{ height: '40px' }} className="text-sm text-white font-light">Owner: {nft.owner}</p>
                 <br />
-                <p style={{ height: '40px' }} className="text-white font-light">Sold: {nft.sold}</p>
                 </div>
                 <div className="p-4 bg-blue-400">
                   <p className="text-xl font-medium text-black">Price - {nft.price} ETH</p>
                 </div>
                 <br />
-                <div className="grid grid-cols-3 gap-2 items-center ">
+                <div className="grid grid-cols-3 ml-10 gap-2 items-center ">
                   <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
                     <div className="">
                       <TelegramShareButton
@@ -150,20 +240,26 @@ export default function Inventory() {
                     </div>
                   </div>
                 </div>
-                <div className="lg:grid grid-cols-2 gap-4">
-                  <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowModal(true)}>Auction</button>
-                  <button className="w-full lg:w-auto my-4 rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50" onClick={() => setShowTransferModal(true)}>Transfer</button>
-                </div>
+                <br />
+                <button onClick={() => setShowModal(true)} className="block w-full px-40 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+                  Start Auction
+                </button>
+                <br />
+                <br />
               </div>
             ))
           }
         </div>
       </div>
+      <div className="bg-cybornheader">
+
         <div className="px-4">
         {
           Boolean(sold.length) && (
             <div>
-              <h2 className="text-2xl py-2">Items sold</h2>
+            <br />
+              <h2 className="text-6xl text-white py-2 text-center">Sold List</h2>
+              <br />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
                 {
                   sold.map((nft, i) => (
@@ -180,7 +276,7 @@ export default function Inventory() {
                         <p className="text-2xl font-light text-white">Price - {nft.price} ETH</p>
                       </div>
                       <br />
-                      <div className="grid grid-cols-3 gap-2 items-center bg-cybornheader">
+                      <div className="grid grid-cols-3 ml-10 gap-2 items-center">
                         <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
                           <div className="">
                             <TelegramShareButton
@@ -193,7 +289,7 @@ export default function Inventory() {
                           </div>
                         </div>
 
-                        <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                        <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500 h-14 w-14 group  ">
                           <div className="">
                             <TwitterShareButton
                               url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
@@ -205,7 +301,7 @@ export default function Inventory() {
                           </div>
                         </div>
 
-                        <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                        <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500 h-14 w-14 group  ">
                           <div className="">
                           <WhatsappShareButton
                             url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
@@ -228,6 +324,7 @@ export default function Inventory() {
         <br />
         </div>
         <div>
+        </div>
         {showModal ? (
           <>
             <div
@@ -250,59 +347,58 @@ export default function Inventory() {
                   </div>
 
                   <div className="relative p-6 flex-auto">
-                    <input
-                      placeholder="Auction Asset Name"
-                      className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    />
-                      <br />
-                    <textarea
-                      placeholder="Start Auction Price"
-                      className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    />
-                      <br />
-                    <input
-                      placeholder="End Auction Price"
-                      className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    />
+
+                  <input
+                    placeholder="Asset Name"
+                    className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
+
+                  />
                     <br />
+
+                  <label className="text-white"> Auction End Time </label>
                     <div class="relative">
+
                       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                       </div>
-                      <input datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction Start date" />
-                    </div>
-                    <br />
-                    <div class="relative">
-                      <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                      </div>
-                      <input datepicker type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction End date" />
+
+                      <input datepicker type="time" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select Auction Start date" />
                     </div>
                     <br />
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Upload file</label>
-                      <input name="Asset" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="file" />
+                      <input name="Asset" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={onChange} type="file" />
                       <div className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Your Uploaded will be shown below*</div>
                       <br />
-                    <button className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
-                      Create NFT
+                  <button onClick={createTrade} className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+                      Start Auction
                     </button>
                   </div>
 
                   <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                     <button
-                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      className="text-black rounded bg-white font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
                       onClick={() => setShowModal(false)}
                     >
                       Close
                     </button>
-                    <button
-                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Save Changes
-                    </button>
+                  </div>
+                  <div className="flex-1 shrink-0">
+                    <div className="flex-1 shrink-0 h-full w-full object-cover md:h-full">
+
+
+                    {
+                      fileUrl && (
+                        <div>
+                        <img className="rounded mt-4" width="500" height="500" src={fileUrl} />
+                        <video autoPlay loop className="rounded mt-4" width="500" height="500">
+                          <source src={fileUrl} />
+                        </video>
+                        </div>
+                      )
+                    }
+                    </div>
                   </div>
                 </div>
               </div>

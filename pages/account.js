@@ -84,6 +84,7 @@ export default function Account() {
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
     <CybornHeader />
+    <hr />
     <div className="flex justify-center bg-background">
       <div className="p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
@@ -92,7 +93,7 @@ export default function Account() {
               <div key={i} className="border shadow rounded-xl overflow-hidden">
                 <img src={nft.image} className="rounded" />
                 <div className="p-4 bg-black">
-                  <p className="text-2xl font-bold text-white bg-gradient-to-l from-indigo-500 to-bg-purple-400">Price - {nft.price} Eth</p>
+                  <p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
                 </div>
               </div>
             ))
@@ -100,6 +101,7 @@ export default function Account() {
         </div>
       </div>
     </div>
+    <br />
     <CybornFooter />
     </div>
   )
