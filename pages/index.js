@@ -146,6 +146,16 @@ function Home() {
         <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
       </Head>
       <IndexHeader />
+      <div className="section home-hero flex h-screen items-center">
+        <div className="home-hero-content container-default mx-auto">
+          <h1 className="title home-hero gradient-text">Create and collect your favourite NFTs</h1>
+          <p className="paragraph home-hero mt-4">Cyborn is the NFT community for creators and collectors of unique Asian digital content</p>
+          <div className="button-wrapper flex spac-x-2 justify-center mt-8">
+            <a href="/home" className="button button-gradient button-lg mx-4">Explore</a>
+            <a href="/register" className="button button-primary button-lg mx-4">Create</a>
+          </div>
+        </div>
+      </div>
       <hr />
       <div className="flex items-center flex-col justify-center lg:flex-row py-28 px-6 md:px-24 md:py-20 lg:py-32 gap-16 lg:gap-28">
             <div className="w-full lg:w-1/2">
@@ -174,6 +184,16 @@ function Home() {
       <link rel="icon" type="image/png" sizes="16x16" href="/ark.png" />
     </Head>
     <IndexHeader />
+    <div className="section home-hero flex h-screen items-center">
+      <div className="home-hero-content container-default mx-auto">
+        <h1 className="title home-hero gradient-text">Create and collect your favourite NFTs</h1>
+        <p className="paragraph home-hero mt-4">Cyborn is the NFT community for creators and collectors of unique Asian digital content</p>
+        <div className="button-wrapper flex spac-x-2 justify-center mt-8">
+          <a href="/home" className="button button-gradient button-lg mx-4">Explore</a>
+          <a href="/register" className="button button-primary button-lg mx-4">Create</a>
+        </div>
+      </div>
+    </div>
     <hr />
     <section className="relative bg-background">
 
