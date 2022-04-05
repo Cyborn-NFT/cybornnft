@@ -18,7 +18,7 @@ import withReactContent from "sweetalert2-react-content";
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 
-import { CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
+import { AUCTION_TOKEN_ABI, AUCTION_TOKEN_ADDRESS, AUCTION_MARKET_ABI, AUCTION_MARKET_ADDRESS, CYBORN_NFT_ADDRESS, CYBORN_MARKET_ADDRESS, CYBORN_MARKET_ABI, CYBORN_NFT_ABI, AUCTION_NFT_ABI, AUCTION_NFT_ADDRESS} from '/constants'
 
 
 
@@ -102,7 +102,7 @@ function Auction(){
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
 
-    let contract = new ethers.Contract(CYBORN_NFT_ADDRESS, CYBORN_NFT_ABI, signer)
+    let contract = new ethers.Contract(AUCTION_TOKEN_ADDRESS, AUCTION_TOKEN_ABI, signer)
     let transaction = await contract.createToken(url)
       mintOpen();
     Router.events.on("routeChangeStart", nProgress.start);
@@ -113,9 +113,20 @@ function Auction(){
     let event = tx.events[0]
     let value = event.args[2]
     let tokenId = value.toNumber()
+    const price = ethers.utils.parseUnits(formInput.price, 'ether')
+
+    contract = new ethers.Contract(AUCTION_MARKET_ADDRESS, AUCTION_MARKET_ABI, signer)
+    let listingPrice = await contract.getListingPrice()
+    listingPrice = listingPrice.toString()
+    transaction = await contract.createMarketItem(AUCTION_TOKEN_ADDRESS, tokenId, price, { value: listingPrice })
+    Router.events.on("routeChangeStart", nProgress.start);
+    Router.events.on("routeChangeError", nProgress.done);
+    await transaction.wait()
+    Router.events.on("routeChangeComplete", nProgress.done);
+    open();
+
 
     contract = new ethers.Contract(AUCTION_NFT_ADDRESS, AUCTION_NFT_ABI, signer)
-
     transaction = await contract.SimpleAuction(1547, "0xD0388ceC17c6a0D2D43e5FE8De0Bafb1d36CAFb3")
     Router.events.on("routeChangeStart", nProgress.start);
     Router.events.on("routeChangeError", nProgress.done);
@@ -162,6 +173,13 @@ function Auction(){
                 onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
 
               />
+                <br />
+                <input
+                  placeholder="Star Bid Price in ETH"
+                  className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+
+                />
                 <br />
               <label htmlFor="protocol" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select your protocol</label>
               <select id="protocol" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
