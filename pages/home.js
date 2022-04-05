@@ -286,6 +286,10 @@ export default function Home() {
                 <hr />
                 <div className="p-4 bg-black">
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Seller: {nfte.seller}</p>
+                <p style={{ height: '40px' }} className="text-xs text-white font-light">Highest Bid Price: </p>
+                <p style={{ height: '40px' }} className="text-xs text-white font-light">Highest Bid Owner: </p>
+
+
                 <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}</p>
                   <div className="grid grid-cols-3 gap-2 items-center ">
                     <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
