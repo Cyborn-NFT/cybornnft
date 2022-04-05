@@ -194,35 +194,36 @@ function Home() {
         </div>
       </div>
     </div>
-    <hr />
     <section className="relative bg-background">
-      <div className="hidden sm:block sm:inset-0 sm:absolute"></div>
-      <div className="relative max-w-screen-xl px-8 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
-        <div className="max-w-xl text-center sm:text-left">
-          <h2 className="text-3xl text-white font-extrabold sm:text-5xl">
-            Explore our NFT Market
-            <strong className="font-extrabold text-white sm:block">
-              Want to list and sell your NFT?
-            </strong>
-          </h2>
-          <p className="max-w-lg mt-4 text-white sm:leading-relaxed sm:text-xl">
-            Create, Manage, and List your NFT in our market with low gas fee.
-          </p>
-          <div className="flex flex-wrap gap-4 mt-8 text-center">
-            <input placeholder="Enter Your Email" className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              onChange={e => setEmail(e.target.value)}
-              style={{ margin: 10 }}
-            />
-            <button onClick={() => signIn()} className="w-full block button button-lg button-gradient">
-              Sign In
-            </button >
+      <div className="container-default mx-auto">
+        <div className="hidden sm:block sm:inset-0 sm:absolute"></div>
+        <div className="relative max-w-screen-xl px-8 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
+          <div className="max-w-xl text-center sm:text-left">
+            <h2 className="title text-3xl text-white sm:text-5xl">
+              Explore our NFT Market
+              <strong className="title text-3xl sm:text-5xl text-white sm:block">
+                Want to list and sell your NFT?
+              </strong>
+            </h2>
+            <p className="max-w-lg mt-4 text-white sm:leading-relaxed sm:text-xl">
+              Create, Manage, and List your NFT in our market with low gas fee.
+            </p>
+            <div className="flex flex-wrap gap-4 mt-8 text-center">
+              <input placeholder="Enter Your Email" className="mt-2 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                onChange={e => setEmail(e.target.value)}
+                style={{ margin: 10 }}
+              />
+              <button onClick={() => signIn()} className="w-full block button button-lg button-gradient">
+                Sign In
+              </button >
+            </div>
           </div>
         </div>
       </div>
     </section>
     <div className="section home-explore flex items-center">
-      <div className="home-explore-ceontent container-default mx-auto">
-        <h2 className="title home-explore text-center mt-8">Explore NFTs</h2>
+      <div className="home-explore-content container-default mx-auto">
+        <h2 className="title home-explore text-center my-10 text-3xl sm:text-5xl">Explore NFTs</h2>
         <div className="lg:grid grid-cols-3 gap-6 my-5">
           <input type="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
           <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -236,7 +237,7 @@ function Home() {
             <option value="/polygon">Matic</option>
           </select>
         </div>
-        <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        <div id="items" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
@@ -263,26 +264,28 @@ function Home() {
         </div>
       </div>
     </div>
-    <div>
-      <h2 className="title home-explore text-center my-8">Featured Collections</h2>
-      <div id="items" className="relative max-w-screen-xl px-4 py-24 mx-auto lg:items-center lg:flex lg:grid grid-cols-4 gap-4">
-        {results.map((item, index)=>{
-          return(
-            <div className="block p-8 max-w-sm rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-cybornheader dark:border-gray-700 dark:hover:bg-gray-700">
-              <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                <div className="px-2 py-4">
-                  <div key={index} className="font-light text-md mb-2">
-                    <img className="rounded-full" src="./ark.png" />
-                    <p className="text-white text-sm">{item.seller}</p>
+    <div className="section home-explore flex items-center">
+      <div className="home-explore-content container-default mx-auto">
+        <h2 className="title text-center my-10 text-3xl sm:text-5xl">Featured Collections</h2>
+        <div id="items" className="relative max-w-screen-xl mx-auto lg:items-center lg:flex lg:grid grid-cols-4 gap-4">
+          {results.map((item, index)=>{
+            return(
+              <div className="block p-8 max-w-sm rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-cybornheader dark:border-gray-700 dark:hover:bg-gray-700">
+                <div className="max-w-sm rounded overflow-hidden shadow-lg">
+                  <div className="px-2 py-4">
+                    <div key={index} className="font-light text-md mb-2">
+                      <img className="rounded-full" src="./ark.png" />
+                      <p className="text-white text-sm">{item.seller}</p>
+                    </div>
+                  </div>
+                  <div className="px-6 pt-4 pb-2">
+                    <button onClick={()=>router.push(`https://cybornnft.vercel.app/${item.seller}`)} className="w-full button button-primary button-lg">Visit</button>
                   </div>
                 </div>
-                <div className="px-6 pt-4 pb-2">
-                  <button onClick={()=>router.push(`https://cybornnft.vercel.app/${item.seller}`)} className="w-full button button-primary button-lg">Visit</button>
-                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </div>
     <CybornFooter />
