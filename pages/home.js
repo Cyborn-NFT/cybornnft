@@ -20,6 +20,7 @@ import withReactContent from "sweetalert2-react-content";
 
 export default function Home() {
   const router = useRouter();
+  const [showTransferModal, setShowTransferModal] = React.useState(false);
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
   useEffect(() => {
@@ -280,7 +281,7 @@ export default function Home() {
                 <div className="p-4 bg-black">
                   <p style={{ height: '40px' }} className="text-2xl text-white font-semibold">{nfte.name}</p>
                   <p style={{ height: '40px' }} className="text-white font-light">{nfte.description}</p>
-              
+
                 </div>
                 <hr />
                 <div className="p-4 bg-black">
@@ -325,7 +326,7 @@ export default function Home() {
 
 
                   <p className="text-xl mb-4 font-bold text-white">Start Bid: {nfte.price} ETH</p>
-                  <button className="w-full bg-blue-400 text-black font-bold py-2 px-12 rounded">Place a bid</button>
+                  <button onClick={() => setShowTransferModal(true)} className="w-full bg-blue-400 text-black font-bold py-2 px-12 rounded">Place a bid</button>
                 </div>
                 <br />
                   <br />
@@ -335,6 +336,62 @@ export default function Home() {
           }
         </div>
       </div>
+    </div>
+    <div>
+    {showTransferModal ? (
+      <>
+        <div
+          className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+        >
+          <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none">
+              <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <h3 className="text-3xl font-semibold text-white">
+                  Place Your Bid
+                </h3>
+                <button
+                  className="p-1 ml-auto bg-transparent border-0 text-white opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                  onClick={() => setShowTransferModal(false)}
+                >
+                  <span className="bg-black text-white h-6 w-6 text-3xl block">
+                    ×
+                  </span>
+                </button>
+              </div>
+
+              <div className="relative p-6 flex-auto">
+                <input
+                  placeholder="Enter Your Bid Price"
+                  className="mt-8 border rounded p-4 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                />
+                <br />
+                <button className="block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring">
+                  Submit
+                </button>
+              </div>
+
+              <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <button
+                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => setShowTransferModal(false)}
+                >
+                  Close
+                </button>
+                <button
+                  className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => setShowTransferModal(false)}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      </>
+    ) : null}
     </div>
     <CybornFooter />
     </div>
