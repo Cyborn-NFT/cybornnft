@@ -205,59 +205,68 @@ export default function Home() {
     <CybornHeader />
     <div className="flex justify-center">
       <div className="px-4 container-default">
-        <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        <div id="items" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
-              <div key={i} className="rounded-xl overflow-hidden">
-                <img src={nft.image} />
-                <div className="p-4 bg-black">
-                  <p style={{ height: '40px' }} className="text-2xl text-white font-semibold">{nft.name}</p>
-                  <p style={{ height: '40px' }} className="text-white font-light">{nft.description}</p>
-                </div>
-                <div className="p-4 bg-cybornheader">
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Seller: {nft.seller}</p>
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Owner: {nft.owner}</p>
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}</p>
-                  <div className="grid grid-cols-3 gap-2 items-center ">
-                    <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
-                      <div className="">
-                        <TelegramShareButton
-                           url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
-                           title={"Here's my NFT Link, if you are interested you can buy it through this link"}
-                        >
-                        <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
-
-                        </TelegramShareButton>
+              <div key={i} className="card overflow-hidden">
+                <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
+                  <a>
+                  <div className="card-image-wrapper p-4">
+                    <img src={nft.image} alt={nft.name} title={nft.name} />
+                  </div>
+                  <div className="px-4 card-content">
+                    <div className="grid grid-cols-2">
+                      <div className="card-title">
+                        <p className="nft-name">{nft.name}</p>
+                        <p className="nft-description">{nft.description}</p>
+                      </div>
+                      <div className="nft-price text-right">
+                        <span className="text-right">
+                          <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
+                        </span>
                       </div>
                     </div>
-
-                    <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
-                      <div className="">
-                        <TwitterShareButton
+                  </div>
+                  </a>
+                </Link>
+                <div className="grid grid-cols-3 gap-2 items-center ">
+                  <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
+                    <div className="">
+                      <TelegramShareButton
                           url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
                           title={"Here's my NFT Link, if you are interested you can buy it through this link"}
-                          >
-                            <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
+                      >
+                      <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
 
-                        </TwitterShareButton>
-                      </div>
+                      </TelegramShareButton>
                     </div>
+                  </div>
 
-                    <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
-                      <div className="">
+                  <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                    <div className="">
+                      <TwitterShareButton
+                        url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                        title={"Here's my NFT Link, if you are interested you can buy it through this link"}
+                        >
+                          <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
+
+                      </TwitterShareButton>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                    <div className="">
                       <WhatsappShareButton
                         url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
                         title={"Here's my NFT Link, if you are interested you can buy it through this link"}
                       >
-                      <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
+                        <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
                       </WhatsappShareButton>
-                      </div>
                     </div>
                   </div>
-
-
-                  <p className="text-xl mb-4 font-bold text-white">{nft.price} ETH</p>
-                  <button className="w-full bg-blue-400 text-black font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
+                </div>
+                <div className="pb-4 px-4 pt-2 card-link">
+                  <button className="button-link" onClick={() => buyNft(nft)}>Buy Now</button>
                 </div>
               </div>
             ))

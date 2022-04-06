@@ -241,22 +241,28 @@ function Home() {
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
-                <div className="card-image-wrapper p-4">
-                  <img src={nft.image} alt={nft.name} title={nft.name} />
-                </div>
-                <div className="p-4 card-content">
-                  <div className="grid grid-cols-2">
-                    <div className="card-title">
-                      <p className="nft-name">{nft.name}</p>
-                      <p className="nft-description">{nft.description}</p>
-                    </div>
-                    <div className="nft-price text-right">
-                      <span className="text-right">
-                        <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
-                      </span>
+                <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
+                  <a>
+                  <div className="card-image-wrapper p-4">
+                    <img src={nft.image} alt={nft.name} title={nft.name} />
+                  </div>
+                  <div className="px-4 card-content">
+                    <div className="grid grid-cols-2">
+                      <div className="card-title">
+                        <p className="nft-name">{nft.name}</p>
+                        <p className="nft-description">{nft.description}</p>
+                      </div>
+                      <div className="nft-price text-right">
+                        <span className="text-right">
+                          <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  <button className="w-full button button-primary mt-5" onClick={() => buyNft(nft)}>Buy</button>
+                  </a>
+                </Link>
+                <div className="pb-4 px-4 pt-2 card-link">
+                  <button className="button-link" onClick={() => buyNft(nft)}>Buy Now</button>
                 </div>
               </div>
             ))
