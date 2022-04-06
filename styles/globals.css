@@ -138,6 +138,14 @@ h2 {
   animation: flowGradient 3s infinite;
   -webkit-animation: flowGradient 3s infinite;
 }
+.button-link {
+  color: #FF72B5;
+  font-weight: 700;
+}
+.button-link:hover {
+  transition: color 350ms ease;
+  color: #c0005b;
+}
 /* Header */
 .nav-link {
   font-weight: 600;
