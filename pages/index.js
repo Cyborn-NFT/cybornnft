@@ -279,10 +279,10 @@ function Home() {
               <Link href={`https://cybornnft.vercel.app/${item.seller}`}>
                 <a>
                   <div key={index} className="card overflow-hidden">
-                    <div className="card-image-wrapper p-4">
+                    <div className="card-image-cover p-4">
                       <img src="./ark.png" />
                     </div>
-                    <p className="text-center p-4">{ item.seller }</p>
+                    <p className="text-center p-4">{ item.name }</p>
                   </div>
                 </a>
               </Link>
