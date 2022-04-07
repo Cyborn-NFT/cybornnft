@@ -273,22 +273,19 @@ function Home() {
     <div className="section home-explore flex items-center">
       <div className="home-explore-content container-default mx-auto">
         <h2 className="title text-center my-10 text-3xl sm:text-5xl">Featured Collections</h2>
-        <div id="items" className="relative max-w-screen-xl mx-auto lg:items-center lg:flex lg:grid grid-cols-4 gap-4">
+        <div id="collections" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
           {results.map((item, index)=>{
             return(
-              <div className="block p-8 max-w-sm rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-cybornheader dark:border-gray-700 dark:hover:bg-gray-700">
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                  <div className="px-2 py-4">
-                    <div key={index} className="font-light text-md mb-2">
-                      <img className="rounded-full" src="./ark.png" />
-                      <p className="text-white text-sm">{item.seller}</p>
+              <Link href={`https://cybornnft.vercel.app/${item.seller}`}>
+                <a>
+                  <div key={index} className="card overflow-hidden">
+                    <div className="card-image-wrapper p-4">
+                      <img src="./ark.png" />
                     </div>
+                    <p className="text-center p-4">{ item.seller }</p>
                   </div>
-                  <div className="px-6 pt-4 pb-2">
-                    <button onClick={()=>router.push(`https://cybornnft.vercel.app/${item.seller}`)} className="w-full button button-primary button-lg">Visit</button>
-                  </div>
-                </div>
-              </div>
+                </a>
+              </Link>
             )
           })}
         </div>

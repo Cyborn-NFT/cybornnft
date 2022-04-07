@@ -61,8 +61,25 @@ h2 {
   height: 50px;
   width: 100%;
 }
+@media (min-width: 981px) {
+  .container-default {
+      padding: 0px 32px;
+  }
+}
+@media (min-width: 768px) {
+  .container-default {
+      padding: 0px 28px;
+  }
+}
+@media (min-width: 578px) {
+  .container-default {
+      padding: 0px 24px;
+  }
+}
 .container-default {
-  max-width: 1400px;
+max-width: 1400px;
+width: 100%;
+padding: 0px 16px;
 }
 .section.home-hero {
   background-image: url('/home-hero-bg.svg');
