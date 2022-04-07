@@ -278,71 +278,72 @@ export default function Home() {
     <br />
 
     <h1 className="text-white p-8 text-center text-6xl">Auctions</h1>
-    <div className="flex bg-cybornheader justify-center">
+    <div className="flex justify-center">
       <div className="px-4 container-default">
-        <div id="items" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        <div id="items" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
           {
             nftz.map((nfte, i) => (
-              <div key={i} className="rounded-xl overflow-hidden">
-                <img src={nfte.image} />
-                <div className="p-4 bg-black">
-                  <p style={{ height: '40px' }} className="text-2xl text-white font-semibold">{nfte.name}</p>
-                  <p style={{ height: '40px' }} className="text-white font-light">{nfte.description}</p>
-
-                </div>
-                <hr />
-                <div className="p-4 bg-black">
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Seller: {nfte.seller}</p>
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Highest Bid Price: </p>
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Highest Bid Owner: </p>
-
-
-                <p style={{ height: '40px' }} className="text-xs text-white font-light">Link: {`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}</p>
-                  <div className="grid grid-cols-3 gap-2 items-center ">
-                    <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
-                      <div className="">
-                        <TelegramShareButton
-                           url={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}
-                           title={"Here's my NFT Link, if you are interested you can buy it through this link"}
-                        >
-                        <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
-
-                        </TelegramShareButton>
+              <div key={i} className="card overflow-hidden">
+                <Link href={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}>
+                  <a>
+                  <div className="card-image-wrapper p-4">
+                    <img src={nfte.image} alt={nfte.name} title={nfte.name} />
+                  </div>
+                  <div className="px-4 card-content">
+                    <div className="grid grid-cols-2">
+                      <div className="card-title">
+                        <p className="nft-name">{nfte.name}</p>
+                        <p className="nft-description">{nfte.description}</p>
+                      </div>
+                      <div className="nft-price text-right">
+                        <span className="text-right">
+                          <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nfte.price} ETH
+                        </span>
                       </div>
                     </div>
-
-                    <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
-                      <div className="">
-                        <TwitterShareButton
+                  </div>
+                  </a>
+                </Link>
+                <div className="grid grid-cols-3 gap-2 items-center ">
+                  <div className="bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group ">
+                    <div className="">
+                      <TelegramShareButton
                           url={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}
                           title={"Here's my NFT Link, if you are interested you can buy it through this link"}
-                          >
-                            <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
+                      >
+                      <FaTelegramPlane className="w-6 h-6 m-4 text-white hover:text-black"></FaTelegramPlane>
 
-                        </TwitterShareButton>
-                      </div>
+                      </TelegramShareButton>
                     </div>
+                  </div>
 
-                    <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
-                      <div className="">
+                  <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                    <div className="">
+                      <TwitterShareButton
+                        url={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}
+                        title={"Here's my NFT Link, if you are interested you can buy it through this link"}
+                        >
+                          <FaTwitter className="w-6 h-6 m-4 text-white hover:text-black"></FaTwitter>
+
+                      </TwitterShareButton>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  ">
+                    <div className="">
                       <WhatsappShareButton
                         url={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}
                         title={"Here's my NFT Link, if you are interested you can buy it through this link"}
                       >
-                      <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
+                        <FaWhatsapp className="w-6 h-6 m-4 text-white hover:text-black"></FaWhatsapp>
                       </WhatsappShareButton>
-                      </div>
                     </div>
                   </div>
-
-
-                  <p className="text-xl mb-4 font-bold text-white">Start Bid: {nfte.price} ETH</p>
-                  <button onClick={() => setShowTransferModal(true)} className="w-full bg-blue-400 text-black font-bold py-2 px-12 rounded">Place a bid</button>
                 </div>
-                <br />
-                  <br />
+                <div className="pb-4 px-4 pt-2 card-link">
+                  <button className="button-link" onClick={() => setShowTransferModal(true)}>Place a bid</button>
+                </div>
               </div>
-
             ))
           }
         </div>
