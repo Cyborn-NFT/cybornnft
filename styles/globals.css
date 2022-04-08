@@ -238,7 +238,11 @@ footer .text-xs {
   height: 18px;
   padding-bottom: 3px;
 }
-.card-image-wrapper > img {
+.card-content .button-link {
+  color: #ffffff;
+  padding: 0;
+}
+.card-image-wrapper img {
   border-radius: 10px;
 }
 .card-image-cover {
