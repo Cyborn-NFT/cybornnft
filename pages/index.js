@@ -223,7 +223,7 @@ function Home() {
     </section>
     <div className="section home-explore flex items-center">
       <div className="home-explore-content container-default mx-auto">
-        <h2 className="title home-explore text-center my-10 text-3xl sm:text-5xl">Explore NFTs</h2>
+        <h2 className="title home-explore text-center my-10 text-3xl sm:text-5xl gradient-text">Explore NFTs</h2>
         <div className="lg:grid grid-cols-3 gap-6 my-5">
           <input type="search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required />
           <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -262,7 +262,7 @@ function Home() {
                   </a>
                 </Link>
                 <div className="pb-4 px-4 pt-2 card-link">
-                  <button className="button-link" onClick={() => buyNft(nft)}>Buy Now</button>
+                  <button className="button-card py-2" onClick={() => buyNft(nft)}>Buy Now</button>
                 </div>
               </div>
             ))
@@ -272,7 +272,7 @@ function Home() {
     </div>
     <div className="section home-explore flex items-center">
       <div className="home-explore-content container-default mx-auto">
-        <h2 className="title text-center my-10 text-3xl sm:text-5xl">Featured Collections</h2>
+        <h2 className="title text-center my-10 text-3xl sm:text-5xl gradient-text">Featured Collections</h2>
         <div id="collections" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
           {results.map((item, index)=>{
             return(
