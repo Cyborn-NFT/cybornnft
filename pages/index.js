@@ -237,7 +237,7 @@ function Home() {
             <option value="/polygon">Matic</option>
           </select>
         </div>
-        <div id="items" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+        <div id="items" className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
@@ -261,7 +261,7 @@ function Home() {
                   </div>
                   </a>
                 </Link>
-                <div className="pb-4 px-4 pt-2 card-link">
+                <div className="card-link">
                   <button className="button-card py-2" onClick={() => buyNft(nft)}>Buy Now</button>
                 </div>
               </div>

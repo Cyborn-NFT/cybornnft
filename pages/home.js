@@ -205,7 +205,7 @@ export default function Home() {
     <CybornHeader />
     <div className="flex justify-center">
       <div className="px-4 container-default">
-        <div id="items" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+        <div id="items" className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
@@ -265,8 +265,8 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="pb-4 px-4 pt-2 card-link">
-                  <button className="button-link" onClick={() => buyNft(nft)}>Buy Now</button>
+                <div className="card-link">
+                  <button className="button-card py-2" onClick={() => buyNft(nft)}>Buy Now</button>
                 </div>
               </div>
             ))
@@ -277,10 +277,10 @@ export default function Home() {
     <br />
     <br />
 
-    <h1 className="text-white p-8 text-center text-6xl">Auctions</h1>
+    <h2 className="text-white p-8 text-center text-6xl gradient-text">Auctions</h2>
     <div className="flex justify-center">
       <div className="px-4 container-default">
-        <div id="items" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+        <div id="items" className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-4 pt-4">
           {
             nftz.map((nfte, i) => (
               <div key={i} className="card overflow-hidden">
@@ -296,6 +296,12 @@ export default function Home() {
                         <p className="nft-description">{nfte.description}</p>
                       </div>
                       <div className="nft-price text-right">
+                        <svg viewBox="0 0 14 4" fill="none" width="16" height="16" xlmns="http://www.w3.org/2000/svg" class="inline-block"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z" fill="currentColor"></path></svg>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div><p>Current Bid</p></div>
+                      <div>
                         <span className="text-right">
                           <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nfte.price} ETH
                         </span>
@@ -340,8 +346,8 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <div className="pb-4 px-4 pt-2 card-link">
-                  <button className="button-link" onClick={() => setShowTransferModal(true)}>Place a bid</button>
+                <div className="card-link">
+                  <button className="button-card py-2" onClick={() => setShowTransferModal(true)}>Bid Now</button>
                 </div>
               </div>
             ))
