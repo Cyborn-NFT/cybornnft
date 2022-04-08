@@ -198,15 +198,15 @@ function CybornHeader(){
             </p>
           </p>
         </ul>
-        <button type="button" onClick={signOut} className="button button-primary inline-flex items-center">
+        <button type="button" onClick={signOut} className="text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center">
           Logout
         </button>
         &nbsp;&nbsp;
-        <button type="button" onClick={()=> router.push("/polygon/home")} className="button button-primary inline-flex items-center">
+        <button type="button" onClick={()=> router.push("/polygon/home")} className="text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center">
           Switch To Polygon
         </button>
         &nbsp;&nbsp;
-        <button type="button" onClick={connectWallet} className="button button-primary inline-flex items-center">
+        <button type="button" onClick={connectWallet} className="text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center">
           <img width={18} height={18} src="/metamask.svg" /> &nbsp; Connect with MetaMask
         </button>
       </div>
