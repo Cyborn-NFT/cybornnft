@@ -229,7 +229,7 @@ footer .text-xs {
   font-size: .75em;
   font-weight: 400;
 }
-.card-content .nft-price {
+.card-content .nft-price, .card-content .nft-price-text {
   font-size: .8em;
   color: #ffffff;
   font-weight: 600;
