@@ -297,7 +297,7 @@ export default function Home() {
             nftz.map((nfte, i) => (
               <div key={i} className="card overflow-hidden">
                 <div className="card-image-wrapper p-4">
-                  <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
+                  <Link href={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}>
                     <a>
                       <img src={nfte.image} alt={nfte.name} title={nfte.name} />
                     </a>
@@ -306,7 +306,7 @@ export default function Home() {
                 <div className="px-4 card-content">
                   <div className="grid grid-cols-2">
                     <div className="card-title">
-                      <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
+                      <Link href={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}>
                         <a>
                           <p className="nft-name">{nfte.name}</p>
                         </a>
