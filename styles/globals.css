@@ -77,7 +77,7 @@ h2 {
   }
 }
 .container-default {
-max-width: 1400px;
+max-width: 1200px;
 width: 100%;
 padding: 0px 16px;
 }
@@ -208,7 +208,7 @@ footer .text-xs {
   /* background-color: #131313; */
   border-radius: 20px;
   overflow: hidden;
-  color: #A3A5B7;
+  color: #ffffff;
   /* box-shadow: rgba(4, 17, 29, 0.75) 0px 0px 10px 0px; */
   background-color: rgba(255, 255, 255, 0.22);
   border: 1px solid #FF72B5;
@@ -220,30 +220,12 @@ footer .text-xs {
   transform-style: preserve-3d;
   transition: all 0.1s ease 0s;
 }
-.card-title .nft-name {
-  font-size: .9em;
-  font-weight: 600;
-  color: #ffffff;
-}
-.card-title .nft-description {
-  font-size: .75em;
-  font-weight: 400;
-}
-.card-content .nft-price, .card-content .nft-price-text {
-  font-size: .8em;
-  color: #ffffff;
-  font-weight: 600;
-}
-.card-content .nft-price img.eth-logo {
-  height: 18px;
-  padding-bottom: 3px;
-}
 .card-content .button-link {
   color: #ffffff;
   padding: 0;
 }
 .card-image-wrapper img {
-  border-radius: 10px;
+  border-radius: 19px;
 }
 .card-image-cover {
   align-items: center;
@@ -253,4 +235,19 @@ footer .text-xs {
   display: flex;
   width: 100%;
   height: 200px;
+}
+.card-profile .card-profile-desc {
+  font-size: .9em;
+  color: #ffffff;
+}
+.card-price img.eth-logo {
+  height: 18px;
+  padding-bottom: 3px;
+}
+.card-price {
+  font-size: .9em;
+}
+.card-profile-image {
+  height: 40px;
+  width: 40px;
 }

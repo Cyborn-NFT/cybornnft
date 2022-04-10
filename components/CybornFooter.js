@@ -2,17 +2,17 @@ import React from "react";
 import Link from "next/link";
 function CybornFooter(){
   return(
-    <footer className="text-center lg:text-left text-white flex justify-center">
+    <footer className="text-center lg:text-left text-white flex justify-center bg-transparent py-10">
       <div className="mx-6 pt-14 text-center md:text-left footer-container">
-        <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          <div className="">
+        <div className="grid grid-cols-4 lg:grid-flow-col lg:auto-cols gap-12">
+          <div className="col-span-4">
             <Link href='/'>
               <a className="inline-flex items-center mr-4">
                 <img src="/ark.png" title="Cyborn" alt="Cyborn" />
               </a>
             </Link>
-            <p>Asia&#39;s first and largest NFT Market.</p>
-            <div className="flex justify-center items-center lg:justify-between mt-8">
+            <p>Cyborn is the NFT community for creators and collectors of unique Asian digital content.</p>
+            <div className="flex justify-center items-center lg:justify-between my-7">
               <div className="flex justify-start">
                 <a href="#!" className="mr-6 text-white">
                   <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f"
@@ -66,48 +66,28 @@ function CybornFooter(){
                 </a>
               </div>
             </div>
+            <p>© 2021 Cyborn. All Rights Reserved.</p>
           </div>
-          <div className="footer-block lg:ml-20">
-            <h5 className="footer-header font-semibold mb-4 flex justify-center md:justify-start">Marketplace</h5>
+          <div className="footer-block text-right">
             <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">All NFTs</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Art</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Collectibles</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Music</a></li>
+              <li className="footer-link-wrapper"><a href="#!" className="text-white">Marketplace</a></li>
+              <li className="footer-link-wrapper"><a href="#!" className="text-white">All Works</a></li>
+              <li className="footer-link-wrapper"><a href="#!" className="text-white">Collections</a></li>
+              <li className="footer-link-wrapper"><a href="#!" className="text-white">Creators</a></li>
             </ul>
           </div>
-          <div className="footer-block lg:ml-20">
-            <h5 className="footer-header font-semibold mb-4 flex justify-center md:justify-start">My Account</h5>
+          <div className="footer-block ml-5 text-right">
             <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Profile</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Favorites</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">My Collections</a></li>
+              <li className="footer-link-wrapper"><a href="#!" className="text-white">My Profile</a></li>
               <li className="footer-link-wrapper"><a href="#!" className="text-white">Settings</a></li>
             </ul>
           </div>
-          <div className="footer-block lg:ml-20">
-            <h5 className="footer-header font-semibold mb-4 flex justify-center md:justify-start">Resources</h5>
+          <div className="footer-block ml-5 text-right">
             <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Help Center</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Platform Status</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Partners</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Blog</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Docs</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Newsletter</a></li>
-            </ul>
-          </div>
-          <div className="footer-block lg:ml-20">
-            <h5 className="footer-header font-semibold mb-4 flex justify-center md:justify-start">Company</h5>
-            <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">About</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Ventures</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Terms of service</a></li>
               <li className="footer-link-wrapper"><a href="#!" className="text-white">Privacy Policy</a></li>
+              <li className="footer-link-wrapper"><a href="#!" className="text-white">Terms of Service</a></li>
             </ul>
           </div>
-        </div>
-        <div className="text-center py-5 uppercase">
-          <p className="text-xs">© 2021 Cyborn. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
