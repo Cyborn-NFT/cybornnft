@@ -11,9 +11,7 @@ Router.events.on("routeChangeComplete", nProgress.done);
 
 function MyApp({ Component, pageProps }) {
   return(
-      <div>
-      <Component {...pageProps} />
-     </div>
+    <Component {...pageProps} />
    )
 }
 
