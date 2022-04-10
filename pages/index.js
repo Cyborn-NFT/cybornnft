@@ -241,7 +241,7 @@ function Home() {
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
-                <div className="card-image-wrapper p-4">
+                <div className="card-image-wrapper px-4 pt-6 pb-1">
                   <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
                     <a>
                       <img src={nft.image} alt={nft.name} title={nft.name} />
@@ -253,10 +253,10 @@ function Home() {
                     <div className="card-title">
                       <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
                         <a>
-                          <p className="nft-name">{nft.name}</p>
+                          <p className="font-bold">{nft.name}</p>
                         </a>
                       </Link>
-                      <p className="nft-description">{nft.description}</p>
+                      <p className="font-light text-xs">{nft.description}</p>
                     </div>
                     <div className="card-share text-right">
                       <button className="button button-link text-white p-0">
@@ -264,12 +264,19 @@ function Home() {
                       </button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 mt-2">
-                    <div class="nft-price-text"><p>Price</p></div>
-                    <div class="nft-price text-right">
-                      <span className="text-right">
-                        <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
-                      </span>
+                  <div className="grid grid-flow-col auto-cols-max card-profile my-2">
+                    <div className="card-profile-image mr-3">
+                      <img className="rounded-full" src="./avatar.png" />
+                    </div>
+                    <div className="card-profile-desc">
+                      <p class="font-bold">Created by</p>
+                      <p>Creator Name</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 mb-3 card-price">
+                    <div class="font-bold"><p>Price</p></div>
+                    <div class="text-right font-light">
+                      <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
                     </div>
                   </div>
                 </div>
@@ -300,6 +307,31 @@ function Home() {
               </Link>
             )
           })}
+        </div>
+      </div>
+    </div>
+    <div className="section home-explore flex-items-center">
+      <div className="home-explore-content container-default mx-auto">
+        <h2 className="title text-center my-20 text-5xl sm-text-3xl gradient-text">Explore NFTs</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-4">
+          <div className="card over-flow-hidden text-center p-10">
+            <img src="./collections-icon.svg" className="mx-auto my-5" />
+            <h2 className="my-5">Collections</h2>
+            <p className="font-light mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus nulla amet egestas donec lacus augue luctus.</p>
+            <button className="button button-primary">View Collections</button>
+          </div>
+          <div className="card over-flow-hidden text-center p-10">
+            <img src="./all-works-icon.svg" className="mx-auto my-5" />
+            <h2 className="my-5">All Works</h2>
+            <p className="font-light mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus nulla amet egestas donec lacus augue luctus.</p>
+            <button className="button button-primary">View Collections</button>
+          </div>
+          <div className="card over-flow-hidden text-center p-10">
+            <img src="./creators-icon.svg" className="mx-auto my-5" />
+            <h2 className="my-5">Creators</h2>
+            <p className="font-light mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus nulla amet egestas donec lacus augue luctus.</p>
+            <button className="button button-primary">View Collections</button>
+          </div>
         </div>
       </div>
     </div>

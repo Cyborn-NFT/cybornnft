@@ -209,7 +209,7 @@ export default function Home() {
           {
             nfts.map((nft, i) => (
               <div key={i} className="card overflow-hidden">
-                <div className="card-image-wrapper p-4">
+                <div className="card-image-wrapper px-4 pt-6 pb-1">
                   <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
                     <a>
                       <img src={nft.image} alt={nft.name} title={nft.name} />
@@ -221,10 +221,10 @@ export default function Home() {
                     <div className="card-title">
                       <Link href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}>
                         <a>
-                          <p className="nft-name">{nft.name}</p>
+                          <p className="font-bold">{nft.name}</p>
                         </a>
                       </Link>
-                      <p className="nft-description">{nft.description}</p>
+                      <p className="font-light text-xs">{nft.description}</p>
                     </div>
                     <div className="card-share text-right">
                       <button className="button button-link text-white p-0">
@@ -232,12 +232,19 @@ export default function Home() {
                       </button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 mt-2">
-                    <div class="nft-price-text"><p>Price</p></div>
-                    <div class="nft-price text-right">
-                      <span className="text-right">
-                        <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
-                      </span>
+                  <div className="grid grid-flow-col auto-cols-max card-profile my-2">
+                    <div className="card-profile-image mr-3">
+                      <img className="rounded-full" src="./avatar.png" />
+                    </div>
+                    <div className="card-profile-desc">
+                      <p class="font-bold">Created by</p>
+                      <p>Creator Name</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 mb-3 card-price">
+                    <div class="font-bold"><p>Price</p></div>
+                    <div class="text-right font-light">
+                      <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nft.price} ETH
                     </div>
                   </div>
                 </div>
@@ -296,7 +303,7 @@ export default function Home() {
           {
             nftz.map((nfte, i) => (
               <div key={i} className="card overflow-hidden">
-                <div className="card-image-wrapper p-4">
+                <div className="card-image-wrapper px-4 pt-6 pb-1">
                   <Link href={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}>
                     <a>
                       <img src={nfte.image} alt={nfte.name} title={nfte.name} />
@@ -308,10 +315,10 @@ export default function Home() {
                     <div className="card-title">
                       <Link href={`https://cybornnft.vercel.app/${nfte.seller}/${nfte.tokenId}`}>
                         <a>
-                          <p className="nft-name">{nfte.name}</p>
+                          <p className="font-bold">{nfte.name}</p>
                         </a>
                       </Link>
-                      <p className="nft-description">{nfte.description}</p>
+                      <p className="font-light text-xs">{nfte.description}</p>
                     </div>
                     <div className="card-share text-right">
                       <button className="button button-link text-white p-0">
@@ -319,12 +326,19 @@ export default function Home() {
                       </button>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 mt-2">
-                    <div class="nft-price-text"><p>Current Bid</p></div>
-                    <div class="nft-price text-right">
-                      <span className="text-right">
-                        <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nfte.price} ETH
-                      </span>
+                  <div className="grid grid-flow-col auto-cols-max card-profile my-2">
+                    <div className="card-profile-image mr-3">
+                      <img className="rounded-full" src="./avatar.png" />
+                    </div>
+                    <div className="card-profile-desc">
+                      <p class="font-bold">Created by</p>
+                      <p>Creator Name</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 mb-3 card-price">
+                    <div class="font-bold"><p>Current Price</p></div>
+                    <div class="text-right font-light">
+                      <img src="/ethereum.svg" alt="ETH" title="ETH" className="eth-logo inline-block" /> {nfte.price} ETH
                     </div>
                   </div>
                 </div>
@@ -365,7 +379,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="card-link">
-                  <button className="button-card py-2" onClick={() => setShowTransferModal(true)}>Bid Now</button>
+                  <button className="button-card py-2" onClick={() => buyNft(nft)}>Bid Now</button>
                 </div>
               </div>
             ))
