@@ -42,6 +42,10 @@ html, body {
   line-height: 20px;
   color: #ffffff;
   background-color: #03032D; /* Original: 03032D */ /* Alt: 161e37 */
+  background-image: url('/gradient-blur-top.svg'), url('/gradient-blur-bottom.svg');
+  background-position: left -400px top -500px, bottom -600px left -600px;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: contain, contain, contain;
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Lexend', sans-serif;
