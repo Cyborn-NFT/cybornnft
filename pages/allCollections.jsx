@@ -24,7 +24,7 @@ import {
   CYBORN_NFT_ABI,
 } from '/constants';
 
-function Create() {
+function Collections() {
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, updateFormInput] = useState({
     price: '',
@@ -270,4 +270,4 @@ function Create() {
   );
 }
 
-export default Create;
+export default Collections;
