@@ -3,7 +3,7 @@ import Link from "next/link";
 function CybornFooter(){
   return(
     <footer className="text-center lg:text-left text-white flex justify-center bg-transparent py-10">
-      <div className="mx-6 pt-14 text-center md:text-left footer-container">
+      <div className="mx-6 pt-14 text-center md:text-left relative container mx-auto p-6">
         <div className="grid grid-cols-4 lg:grid-flow-col lg:auto-cols gap-12">
           <div className="col-span-4">
             <Link href='/'>

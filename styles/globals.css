@@ -65,7 +65,7 @@ h2 {
   height: 50px;
   width: 100%;
 }
-@media (min-width: 981px) {
+/* @media (min-width: 981px) {
   .container-default {
       padding: 0px 32px;
   }
@@ -84,7 +84,7 @@ h2 {
 max-width: 1200px;
 width: 100%;
 padding: 0px 16px;
-}
+} */
 .section.home-hero {
   background-image: url('/home-hero-bg.svg');
   background-repeat: no-repeat;
@@ -118,14 +118,11 @@ padding: 0px 16px;
   }
 }
 .gradient-text {
-  background-color: #e0dff1;
-  background-image: linear-gradient(95deg, #77f7ff 23.3%, #e762ba 65.89%);
-  background-size: 100%;
-  background-clip: text;
+  background: linear-gradient(92.8deg, #77F7FF, #E762BA);
   -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent; 
-  -moz-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 .button {
   display: inline-block;
@@ -218,7 +215,6 @@ footer .text-xs {
   border: 1px solid #FF72B5;
 }
 .card:hover {
-  cursor: pointer;
   box-shadow: rgba(4, 17, 29, 0.25) 0px 0px 5px 0px;
   transform: translate3d(0px, 0px, 0px) scale3d(0.99, 0.99, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg);
   transform-style: preserve-3d;
