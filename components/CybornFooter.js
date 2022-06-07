@@ -4,8 +4,8 @@ function CybornFooter(){
   return(
     <footer className="text-center lg:text-left text-white flex justify-center bg-transparent py-10">
       <div className="mx-6 pt-14 text-center md:text-left relative container mx-auto p-6">
-        <div className="grid grid-cols-4 lg:grid-flow-col lg:auto-cols gap-12">
-          <div className="col-span-4">
+        <div className="flex flex-col lg:flex-row justify-between">
+          <div>
             <Link href='/'>
               <a className="inline-flex items-center mr-4">
                 <img src="/ark.png" title="Cyborn" alt="Cyborn" />
@@ -66,29 +66,31 @@ function CybornFooter(){
                 </a>
               </div>
             </div>
-            <p>© 2021 Cyborn. All Rights Reserved.</p>
           </div>
-          <div className="footer-block text-right">
-            <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Marketplace</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">All Works</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Collections</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Creators</a></li>
-            </ul>
-          </div>
-          <div className="footer-block ml-5 text-right">
-            <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">My Profile</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Settings</a></li>
-            </ul>
-          </div>
-          <div className="footer-block ml-5 text-right">
-            <ul className="footer-link-list">
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Privacy Policy</a></li>
-              <li className="footer-link-wrapper"><a href="#!" className="text-white">Terms of Service</a></li>
-            </ul>
+          <div className="grid grid-cols-3 gap-10">
+            <div className="footer-block text-center lg:text-right">
+              <ul className="footer-link-list">
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">Marketplace</a></li>
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">All Works</a></li>
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">Collections</a></li>
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">Creators</a></li>
+              </ul>
+            </div>
+            <div className="footer-block text-center lg:text-right">
+              <ul className="footer-link-list">
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">My Profile</a></li>
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">Settings</a></li>
+              </ul>
+            </div>
+            <div className="footer-block text-center lg:text-right">
+              <ul className="footer-link-list">
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">Privacy Policy</a></li>
+                <li className="footer-link-wrapper"><a href="#!" className="text-white">Terms of Service</a></li>
+              </ul>
+            </div>
           </div>
         </div>
+        <p className="mt-5">© 2021 Cyborn. All Rights Reserved.</p>
       </div>
     </footer>
   )

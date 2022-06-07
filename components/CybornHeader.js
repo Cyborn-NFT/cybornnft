@@ -211,10 +211,8 @@ function CybornHeader() {
               </Link>
             </li>
 
-            <p>
-              <p className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:text-white'>
-                Wallet: {userAddress}
-              </p>
+            <p className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white items-center justify-center hover:text-white">
+              Wallet: {userAddress}
             </p>
           </ul>
           <button
