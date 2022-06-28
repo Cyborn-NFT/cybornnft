@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import CybornHeader from '/components/CybornHeader';
 import CybornFooter from '/components/CybornFooter';
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
@@ -164,7 +163,7 @@ function Auction() {
     await transaction.wait();
     Router.events.on('routeChangeComplete', nProgress.done);
     open();
-    router.push('/home');
+    router.push('/inventory');
   }
   return (
     <div>

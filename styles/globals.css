@@ -204,6 +204,10 @@ footer .footer-link-wrapper {
 footer .text-xs {
   font-size: 0.65em;
 }
+
+.profilez{
+  background-color: rgba(255, 255, 255, 0.22)
+}
 /* Card */
 .card {
   /* background-color: #131313; */
@@ -250,4 +254,15 @@ footer .text-xs {
 .card-profile-image {
   height: 40px;
   width: 40px;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+body::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
 }

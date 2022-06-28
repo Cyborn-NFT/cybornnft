@@ -1,6 +1,6 @@
 // import custom components
 import Footer from './../components/CybornFooter';
-import Header from './../components/CybornHeader';
+import Header from './../components/IndexHeader';
 // import SideBar from "./Sidebar";
 export default function Layout({ children }) {
   // styles the main html tag
@@ -10,6 +10,7 @@ export default function Layout({ children }) {
   // };
   return (
     <>
+        <br />
       <Header />
       <main>
         <section>{children}</section>

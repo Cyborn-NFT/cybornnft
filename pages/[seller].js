@@ -4,7 +4,6 @@ import axios from 'axios';
 import Web3Modal from 'web3modal';
 import Link from 'next/link';
 import Image from 'next/image';
-import CybornHeader from '/components/CybornHeader';
 import CybornFooter from '/components/CybornFooter';
 import Head from 'next/head';
 import { supabase } from '../client';
@@ -262,7 +261,7 @@ export default function Seller() {
                 </p>
               </div>
               <br />
-              <div className='grid grid-cols-3 gap-2 items-center bg-cybornheader p-8'>
+              <div className='grid grid-cols-3 gap-2 items-center bg-IndexHeader p-8'>
                 <div className='bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group '>
                   <div className=''>
                     <TelegramShareButton
@@ -315,7 +314,7 @@ export default function Seller() {
           <>
             <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
               <div className='relative w-auto my-6 mx-auto max-w-3xl'>
-                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none'>
+                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-IndexHeader outline-none focus:outline-none'>
                   <div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
                     <h3 className='text-3xl font-semibold text-white'>
                       Start Auction
@@ -439,7 +438,7 @@ export default function Seller() {
           <>
             <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
               <div className='relative w-auto my-6 mx-auto max-w-3xl'>
-                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none'>
+                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-IndexHeader outline-none focus:outline-none'>
                   <div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
                     <h3 className='text-3xl font-semibold text-white'>
                       Transfer NFT
@@ -493,7 +492,7 @@ export default function Seller() {
         <>
           <div className='justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
             <div className='relative w-auto my-6 mx-auto max-w-3xl'>
-              <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none'>
+              <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-IndexHeader outline-none focus:outline-none'>
                 <div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
                   <h3 className='text-3xl font-semibold text-white'>
                     User Profile

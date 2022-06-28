@@ -8,7 +8,8 @@ import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
 import { supabase } from '../client'
 
-function CybornHeader(){
+
+function IndexHeader(){
     const [active, setActive] = useState(false);
 
     const handleClick = () => {
@@ -81,12 +82,30 @@ function CybornHeader(){
           active ? '' : 'hidden'
         }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
       >
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <div className="nav-item w-2/4">
+          <input placeholder="Search" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+      </div>
         <ul className="nav-menu lg:text-base lg:inline-flex md:space-x-0 md:mt-0 md:text-sm lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto">
+        <li className="nav-item">
+          <Link href="/">
+            <a className="nav-link lg:inline-flex lg:w-auto w-full px-3 py-2 items-center justify-center">Home</a>
+          </Link>
+        </li>
           <li className="nav-item">
-            <Link href="/home">
-              <a className="nav-link lg:inline-flex lg:w-auto w-full px-3 py-2 items-center justify-center">Go To NFT Market</a>
+            <Link href="/marketplace">
+              <a className="nav-link lg:inline-flex lg:w-auto w-full px-3 py-2 items-center justify-center">Marketplace</a>
             </Link>
+            <button onClick={()=>router.push("/create")} className="button button-primary button-md mx-4"> Create </button>
           </li>
+
           {
             authenticatedState === 'not-authenticated' && (
               <li className="nav-item">
@@ -102,4 +121,4 @@ function CybornHeader(){
   )
 }
 
-export default CybornHeader;
+export default IndexHeader;

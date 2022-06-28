@@ -1,5 +1,4 @@
 import React from 'react';
-import CybornHeader from '/components/CybornHeader';
 import CybornFooter from '/components/CybornFooter';
 import { useRouter } from 'next/router';
 import Head from 'next/head';

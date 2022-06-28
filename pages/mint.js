@@ -141,7 +141,7 @@ function Create() {
     await transaction.wait();
     Router.events.on('routeChangeComplete', nProgress.done);
     open();
-    router.push('/inventory');
+    router.push('/marketplace');
   }
   return (
     <div>
@@ -164,6 +164,10 @@ function Create() {
           <link rel='icon' type='image/png' sizes='32x32' href='/ark.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/ark.png' />
         </Head>
+        <br />
+        <br />
+        <br />
+        <br />
 
         <div className='flex h-full flex-col md:flex-row lg:p-16 lg:mt-40'>
 
@@ -272,14 +276,57 @@ function Create() {
               </div>
               </div>
               <br />
+              <div className="lg:grid grid-cols-2 gap-4">
+              <button className='block w-full px-12 py-3 text-sm font-medium text-white rounded shadow bg-blue-400 sm:w-auto focus:outline-none focus:ring'>
+                Fixed
+              </button>
+              <button className='block w-full px-12 py-3 text-sm font-medium text-white border rounded shadow bg-transparent sm:w-auto focus:outline-none focus:ring'>
+                Price
+              </button>
+              </div>
+              <br />
+              <div className="lg:grid grid-cols-3 gap-4">
+              <p>Price</p>
+              <select placeholder="Select Protocol"
+                id='protocols'
+                className='form-control block w-full px-3 py-1.5 text-base font-normal bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-black focus:bg-white focus:border-blue-600 focus:outline-none'
+              >
+              <option>ETH</option>
+              <option>Matic</option>
+              </select>
+              <input type="number" placeholder="Enter Quantity"
+                id='protocols'
+                className='form-control block w-full px-3 py-1.5 text-base font-normal bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+              >
+              </input>
+              </div>
+              <br />
+              <div className="lg:grid grid-cols-3 gap-4">
+              <p>Royalties</p>
+              <input type="number" placeholder="Royalties %"
+                id='protocols'
+                className='form-control block w-full px-3 py-1.5 text-base font-normal bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+              >
+              </input>
+              <div>
+              </div>
+              </div>
+              <br />
+              <hr className="border-t border-gray-300" />
+              <br />
+              <br />
               <button
                 onClick={createMarket}
                 className='block w-full px-12 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring'
               >
                 Create NFT
               </button>
+              <br />
+              <br />
+
             </div>
           </div>
+
           <div className='flex-1 shrink-0'>
             <div className='flex-1 shrink-0 h-full w-full object-cover md:h-full'>
               {fileUrl && (
@@ -308,6 +355,21 @@ function Create() {
       <br />
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
     </div>
   );
 }
