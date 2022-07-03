@@ -1,8 +1,10 @@
-import { web3, walletConnectModalInit } from "../web3";
+// import { web3, walletConnectModalInit } from "../web3";
+const web3 = {};
+let walletConnectModalInit = {};
 
 async function getNetworkId() {
   try {
-    return await window.ethereum.request({ method: "eth_chainId" });
+    return await window.ethereum.request({ method: 'eth_chainId' });
   } catch (error) {
     return 1;
   }
@@ -51,7 +53,7 @@ async function enabledWalletConnect() {
 }
 async function enableMetamask() {
   try {
-    await window.ethereum.send("eth_requestAccounts");
+    await window.ethereum.send('eth_requestAccounts');
     const resp = await getWeb3();
     return resp;
   } catch (error) {

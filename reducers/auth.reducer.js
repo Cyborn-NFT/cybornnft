@@ -1,11 +1,10 @@
-
 export function fetchDashboardBanners(state = null, action) {
-    switch (action.type) {
-      case 'FETCHED_NFT_BANNERS':
-        return action.data;
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case 'FETCHED_NFT_BANNERS':
+      return action.data;
+    default:
+      return state;
+  }
 }
 
 export function fetchDashboardInfo(state = null, action) {
@@ -35,9 +34,9 @@ export function fetchDashboard(state = null, action) {
   }
 }
 
-export function fetchCreators(state = null, action) {
+export function allCreators(state = null, action) {
   switch (action.type) {
-    case "FETCHED_CREATORS":
+    case 'FETCHED_ALL_CREATORS':
       return action.data;
     default:
       return state;
@@ -46,7 +45,7 @@ export function fetchCreators(state = null, action) {
 
 export function fetchPagination(state = null, action) {
   switch (action.type) {
-    case "FETCHED_PAGINATION":
+    case 'FETCHED_PAGINATION':
       return action.data;
     default:
       return state;
@@ -55,7 +54,7 @@ export function fetchPagination(state = null, action) {
 
 export function fetchMoreCreators(state = null, action) {
   switch (action.type) {
-    case "FETCHED_MORE_CREATORS":
+    case 'FETCHED_MORE_CREATORS':
       return action.data;
     default:
       return state;
@@ -64,7 +63,7 @@ export function fetchMoreCreators(state = null, action) {
 
 export function fetchMarketPlaceNFT(state = null, action) {
   switch (action.type) {
-    case "FETCHED_MARKETPLACE":
+    case 'FETCHED_MARKETPLACE':
       return action.data;
     default:
       return state;
@@ -73,16 +72,16 @@ export function fetchMarketPlaceNFT(state = null, action) {
 
 export function fetchMoreMarketPlaceNFT(state = null, action) {
   switch (action.type) {
-    case "FETCHED_MORE_MARKETPLACE":
+    case 'FETCHED_MORE_MARKETPLACE':
       return action.data;
     default:
       return state;
   }
 }
 
-export function fetchCollections(state = null, action) {
+export function allCollections(state = null, action) {
   switch (action.type) {
-    case "FETCHED_COLLECTIONS":
+    case 'FETCHED_COLLECTIONS':
       return action.data;
     default:
       return state;
@@ -91,7 +90,7 @@ export function fetchCollections(state = null, action) {
 
 export function fetchMoreCollections(state = null, action) {
   switch (action.type) {
-    case "FETCHED_MORE_COLLECTIONS":
+    case 'FETCHED_MORE_COLLECTIONS':
       return action.data;
     default:
       return state;
@@ -100,7 +99,7 @@ export function fetchMoreCollections(state = null, action) {
 
 export function fetchCollectionDetails(state = null, action) {
   switch (action.type) {
-    case "FETCHED_COLLECTION_DETAIL":
+    case 'FETCHED_COLLECTION_DETAIL':
       return action.data;
     default:
       return state;
@@ -109,7 +108,7 @@ export function fetchCollectionDetails(state = null, action) {
 
 export function updateCollection(state = null, action) {
   switch (action.type) {
-    case "COLLECTION_UPDATED":
+    case 'COLLECTION_UPDATED':
       return action.data;
     default:
       return state;
@@ -117,30 +116,30 @@ export function updateCollection(state = null, action) {
 }
 
 export function fetchTopNFT(state = null, action) {
-    switch (action.type) {
-      case 'FETCHED_TOP_NFT':
-        return action.data;
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case 'FETCHED_TOP_NFT':
+      return action.data;
+    default:
+      return state;
+  }
 }
 
 export function fetchTopCollection(state = null, action) {
-    switch (action.type) {
-      case 'FETCHED_TOP_COLLECTION':
-        return action.data;
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case 'FETCHED_TOP_COLLECTION':
+      return action.data;
+    default:
+      return state;
+  }
 }
 
 export function fetchProfileInfo(state = null, action) {
-    switch (action.type) {
-      case 'FETCHED_PROFILE_INFO':
-        return action.data;
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case 'FETCHED_PROFILE_INFO':
+      return action.data;
+    default:
+      return state;
+  }
 }
 
 export function fetchHallOfFrameArtist(state = null, action) {

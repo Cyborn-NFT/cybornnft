@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 import {
   fetchNonce,
   fetchAuthData,
@@ -8,18 +8,18 @@ import {
   fetchUserProfile,
   fetchResponseFailed,
   fetchUpdatedNFTId,
-} from "./defi.reducer";
+} from './defi.reducer';
 import {
   fetchDashboardBanners,
   fetchDashboard,
   fetchDashboardInfo,
   fetchDashboardHallFrameInfo,
-  fetchCreators,
+  // fetchCreators,
   fetchPagination,
   fetchMoreCreators,
   fetchMarketPlaceNFT,
   fetchMoreMarketPlaceNFT,
-  fetchCollections,
+  allCollections,
   fetchCollectionDetails,
   fetchMoreCollections,
   updateCollection,
@@ -29,12 +29,13 @@ import {
   fetchHallOfFrameCollector,
   fetchHallOfFrameArtwork,
   fetchHallOfFrameArtist,
-} from "./auth.reducer";
+  allCreators,
+} from './auth.reducer';
 import {
   fetchNFTContractInstance,
   fetchNetworkId,
   fetchWeb3Data,
-} from "./web3.reducer";
+} from './web3.reducer';
 import {
   fetchCategory,
   updateProfile,
@@ -56,9 +57,10 @@ import {
   verified_by_instagram,
   fetch_twitter_access_token,
   verified_by_twitter,
-} from "./user.reducer";
+} from './user.reducer';
 
 const rootReducer = combineReducers({
+  allCreators,
   fetchLanguage,
   fetchIsLiked,
   fetchLikesCount,
@@ -80,12 +82,12 @@ const rootReducer = combineReducers({
   fetchDashboardHallFrameInfo,
   updateProfile,
   fetchUserNFT,
-  fetchCreators,
+  // fetchCreators,
   fetchPagination,
   fetchMoreCreators,
   fetchMarketPlaceNFT,
   fetchMoreMarketPlaceNFT,
-  fetchCollections,
+  allCollections,
   fetchCollectionDetails,
   fetchUserProfile,
   fetchProfile,
