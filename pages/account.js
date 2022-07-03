@@ -5,7 +5,6 @@ import Web3Modal from 'web3modal';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-import CybornHeader from '/components/CybornHeader';
 import CybornFooter from '/components/CybornFooter';
 import { supabase } from '../client';
 import { useRouter } from 'next/router';
@@ -82,8 +81,7 @@ export default function Account() {
   }
   if (loadingState === 'loaded' && !nfts.length)
     return (
-      <div className='bg-background '>
-        <hr />
+      <div className=''>
         <br />
         <br />
         <br />
@@ -93,13 +91,11 @@ export default function Account() {
         <br />
         <br />
         <br />
-        <hr />
       </div>
     );
   return (
     <div>
-      <hr />
-      <div className='flex justify-center bg-background'>
+      <div className='flex justify-center'>
         <div className='p-4'>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
             {nfts.map((nft, i) => (

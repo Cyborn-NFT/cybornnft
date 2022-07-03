@@ -4,11 +4,13 @@ import axios from 'axios';
 import Web3Modal from 'web3modal';
 import Link from 'next/link';
 import Image from 'next/image';
-import CybornHeader from '/components/CybornHeader';
 import CybornFooter from '/components/CybornFooter';
 import Head from 'next/head';
 import { supabase } from '../client';
 import Router, { useRouter } from 'next/router';
+import Marketplace from "./marketplace";
+import Account from "./account"
+import Activity from "./activity"
 import {
   CYBORN_NFT_ADDRESS,
   CYBORN_MARKET_ADDRESS,
@@ -28,7 +30,12 @@ import nProgress from 'nprogress';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 
+
+
 export default function Inventory() {
+  const [isShown, setIsShown] = useState(false)
+  const [isShownCollection, setIsShownCollection] = useState(false)
+  const [isShownActivity, setIsShownActivity] = useState(false)
   const [nfts, setNfts] = useState([]);
   const [sold, setSold] = useState([]);
   const [showModal, setShowModal] = React.useState(false);
@@ -40,6 +47,18 @@ export default function Inventory() {
     description: '',
   });
   const MySwal = withReactContent(Swal);
+
+  const handleClick = event =>{
+    setIsShown(current => !current);
+  }
+
+  const handleCollectionClick = event =>{
+    setIsShownCollection(collectionCurrent => !collectionCurrent);
+  }
+
+  const handleActivityClick = event =>{
+    setIsShownActivity(activityCurrent => !activityCurrent);
+  }
 
   const [loadingState, setLoadingState] = useState('not-loaded');
   useEffect(() => {
@@ -137,7 +156,7 @@ export default function Inventory() {
     Router.events.on('routeChangeStart', nProgress.start);
     Router.events.on('routeChangeError', nProgress.done);
     Router.events.on('routeChangeComplete', nProgress.done);
-    router.push('/home');
+    router.push('/marketplace');
   }
 
   async function loadNFTs() {
@@ -182,10 +201,30 @@ export default function Inventory() {
     setNfts(items);
     setLoadingState('loaded');
   }
+  async function buyNft(nft) {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(
+      CYBORN_MARKET_ADDRESS,
+      CYBORN_MARKET_ABI,
+      signer
+    );
+    const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
+    const transaction = await contract.createMarketSale(
+      CYBORN_NFT_ADDRESS,
+      nft.tokenId,
+      {
+        value: price,
+      }
+    );
+    await transaction.wait();
+    loadNFTs();
+  }
   if (loadingState === 'loaded' && !nfts.length)
     return (
-      <div className='bg-background '>
-        <hr />
+      <div>
         <br />
         <br />
         <br />
@@ -197,95 +236,187 @@ export default function Inventory() {
         <br />
         <br />
         <br />
-        <hr />
-        className
+
       </div>
     );
   return (
-    <div>
-      <hr />
-      <div className='p-4 bg-background'>
-        <br />
-        <br />
-        <h2 className='text-6xl text-white text-center py-2'>Items Created</h2>
-        <br />
-        <br />
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
-          {nfts.map((nft, i) => (
-            <div key={i} className='rounded-xl overflow-hidden'>
-              <img src={nft.image} className='rounded' />
-              <div className='p-4 bg-black'>
-                <p
-                  style={{ height: '40px' }}
-                  className='text-sm text-white font-semibold'
-                >
-                  Seller: {nft.seller}
-                </p>
-                <br />
-                <p
-                  style={{ height: '40px' }}
-                  className='text-sm text-white font-light'
-                >
-                  Owner: {nft.owner}
-                </p>
-                <br />
-              </div>
-              <div className='p-4 bg-blue-400'>
-                <p className='text-xl font-medium text-black'>
-                  Price - {nft.price} ETH
-                </p>
-              </div>
-              <br />
-              <div className='grid grid-cols-3 ml-10 gap-2 items-center '>
-                <div className='bg-blue-300 transition-all rounded-full hover:bg-blue-500  h-14 w-14 group '>
-                  <div className=''>
-                    <TelegramShareButton
-                      url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
-                      title={"Here's my NFT Link"}
-                    >
-                      <FaTelegramPlane className='w-6 h-6 m-4 text-white hover:text-black'></FaTelegramPlane>
-                    </TelegramShareButton>
-                  </div>
-                </div>
-
-                <div className='bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  '>
-                  <div className=''>
-                    <TwitterShareButton
-                      url={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
-                      title={"Here's my NFT Link"}
-                    >
-                      <FaTwitter className='w-6 h-6 m-4 text-white hover:text-black'></FaTwitter>
-                    </TwitterShareButton>
-                  </div>
-                </div>
-
-                <div className='bg-blue-300 rounded-full transition-all hover:bg-blue-500 h-14 w-14 group  '>
-                  <div className=''>
-                    <WhatsappShareButton
-                      url={'https://github.com/next-share'}
-                      title={
-                        'next-share is a social share buttons for your next React apps.'
-                      }
-                    >
-                      <FaWhatsapp className='w-6 h-6 m-4 text-white hover:text-black'></FaWhatsapp>
-                    </WhatsappShareButton>
-                  </div>
-                </div>
-              </div>
-              <br />
-              <button
-                onClick={() => setShowModal(true)}
-                className='block w-full px-40 py-3 text-sm font-medium text-black rounded shadow bg-blue-400 sm:w-auto active:bg-lime-100 hover:bg-lime-300 focus:outline-none focus:ring'
-              >
-                Start Auction
-              </button>
-              <br />
-              <br />
-            </div>
-          ))}
+    <div className="lg:p-20">
+      <div className="w-6/6 p-24 rounded-full profilez">
+        <div className="lg:grid grid-cols-7 gap-2">
+          <img className="rounded-full lg:mt-0" src="/avatar.png" />
+          <div>
+          &nbsp;
+            <h1>Nezuko</h1>
+            &nbsp;
+            <p className="card">Wallet Address</p>
+            <p className="font-extralight lg:mt-4">Creator: 0x12se5ed2s</p>
+          </div>
+          <div>
+          </div>
+          &nbsp;
+          <button onClick={()=>router.push("/edit")} className='font-extralight rounded-md px-1 lg:h-2/6 button button-primary button-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50'>
+            Edit
+          </button>
+          <button onClick={()=>router.push("/create")} className='font-extralight rounded-md px-1 lg:h-2/6 button button-primary button-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50'>
+            Create
+          </button>
         </div>
       </div>
-      <div className='bg-cybornheader'>
+      <div>
+      <br />
+      <br />
+      <br />
+      <br />
+        <ul class="flex">
+          <li class="text-center flex-1">
+            <button onClick={handleClick} class="text-center  rounded hover:border-white text-blue-500 py-2 px-4" href="#">Assets</button>
+            <hr className="hover: bg-gray-500" />
+          </li>
+          <li class="text-center flex-1">
+            <button onClick={handleCollectionClick} class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Created</button>
+            <hr />
+          </li>
+          <li class="text-center flex-1">
+            <button onClick={handleClick} class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Offers</button>
+            <hr />
+          </li>
+          <li class="text-center flex-1">
+            <button onClick={handleActivityClick} class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Activity</button>
+            <hr />
+          </li>
+        </ul>
+        <br />
+        <br />
+        <ul class="flex">
+          <li class="text-center flex-1">
+          <input placeholder="Search" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+          </li>
+          <li class="text-center flex-1">
+            <button class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">All</button>
+          </li>
+          <li class="text-center flex-1">
+            <button class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Art</button>
+          </li>
+          <li class="text-center flex-1">
+            <button class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Video</button>
+          </li>
+          <li class="text-center flex-1">
+            <button class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Music</button>
+          </li>
+          <li class="text-center flex-1">
+            <button class="text-center rounded hover:border-white text-blue-500 py-2 px-4" href="#">Sort By</button>
+          </li>
+          <li class="text-center flex-1">
+          <select placeholder="dropdown" className="form-control block w-full px-3 py-1.5 text-base font-normal focus:text-black bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:bg-white focus:border-blue-600 focus:outline-none">
+            <option> Latest </option>
+          </select>
+          </li>
+        </ul>
+        <br />
+        <br />
+        <div>
+        {isShown && <Marketplace />}
+        </div>
+        <div>
+        {isShownCollection && <Inventory />}
+        </div>
+        <div>
+        {isShownActivity && <Activity />}
+        </div>
+
+        <br />
+        <div className='section home-explore flex items-center'>
+          <div className='home-explore-content container-default mx-auto'>
+            <h2 className='title home-explore text-center my-10 text-3xl sm:text-5xl gradient-text'>
+              Featured Collections
+            </h2>
+
+            <div
+              id='items'
+              className='grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'
+            >
+              {nfts.map((nft, i) => (
+                <div key={i} className='card overflow-hidden'>
+                  <div className='card-image-wrapper px-4 pt-6 pb-1'>
+                    <Link
+                      href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                    >
+                      <a>
+                        <img src={nft.image} alt={nft.name} title={nft.name} />
+                      </a>
+                    </Link>
+                  </div>
+                  <div className='px-4 card-content'>
+                    <div className='grid grid-cols-2'>
+                      <div className='card-title'>
+                        <Link
+                          href={`https://cybornnft.vercel.app/${nft.seller}/${nft.tokenId}`}
+                        >
+                          <a>
+                            <p className='font-bold'>{nft.name}</p>
+                          </a>
+                        </Link>
+                        <p className='font-light text-xs'>{nft.description}</p>
+                      </div>
+                      <div className='card-share text-right'>
+                        <button className='button button-link text-white p-0'>
+                          <svg
+                            viewBox='0 0 14 4'
+                            fill='none'
+                            width='16'
+                            height='16'
+                            xlmns='http://www.w3.org/2000/svg'
+                            className='inline-block'
+                          >
+                            <path
+                              fillRule='evenodd'
+                              clipRule='evenodd'
+                              d='M3.5 2C3.5 2.82843 2.82843 3.5 2 3.5C1.17157 3.5 0.5 2.82843 0.5 2C0.5 1.17157 1.17157 0.5 2 0.5C2.82843 0.5 3.5 1.17157 3.5 2ZM8.5 2C8.5 2.82843 7.82843 3.5 7 3.5C6.17157 3.5 5.5 2.82843 5.5 2C5.5 1.17157 6.17157 0.5 7 0.5C7.82843 0.5 8.5 1.17157 8.5 2ZM11.999 3.5C12.8274 3.5 13.499 2.82843 13.499 2C13.499 1.17157 12.8274 0.5 11.999 0.5C11.1706 0.5 10.499 1.17157 10.499 2C10.499 2.82843 11.1706 3.5 11.999 3.5Z'
+                              fill='currentColor'
+                            ></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div className='grid grid-flow-col auto-cols-max card-profile my-2'>
+                      <div className='card-profile-image mr-3'>
+                        <img className='rounded-full' src='./avatar.png' />
+                      </div>
+                      <div className='card-profile-desc'>
+                        <p className='font-bold'>Created by</p>
+                        <p>Creator Name</p>
+                      </div>
+                    </div>
+                    <div className='grid grid-cols-2 mb-3 card-price'>
+                      <div className='font-bold'>
+                        <p>Price</p>
+                      </div>
+                      <div className='text-right font-light'>
+                        <img
+                          src='/ethereum.svg'
+                          alt='ETH'
+                          title='ETH'
+                          className='eth-logo inline-block'
+                        />{' '}
+                        {nft.price} ETH
+                      </div>
+                    </div>
+                  </div>
+                  <div className='card-link'>
+                    <button
+                      className='button-card py-2'
+                      onClick={() => buyNft(nft)}
+                    >
+                      Buy Now
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='bg-IndexHeader'>
         <div className='px-4'>
           {Boolean(sold.length) && (
             <div>
@@ -383,7 +514,7 @@ export default function Inventory() {
           <>
             <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
               <div className='relative w-auto my-6 mx-auto max-w-3xl'>
-                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none'>
+                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-IndexHeader outline-none focus:outline-none'>
                   <div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
                     <h3 className='text-3xl font-semibold text-white'>
                       Start Auction
@@ -500,7 +631,7 @@ export default function Inventory() {
           <>
             <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
               <div className='relative w-auto my-6 mx-auto max-w-3xl'>
-                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-cybornheader outline-none focus:outline-none'>
+                <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-IndexHeader outline-none focus:outline-none'>
                   <div className='flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t'>
                     <h3 className='text-3xl font-semibold text-white'>
                       Transfer NFT
