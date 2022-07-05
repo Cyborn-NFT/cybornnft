@@ -1,4 +1,4 @@
-import { services } from "../services";
+import { services } from '../services';
 
 function setData(data, type) {
   return {
@@ -9,12 +9,12 @@ function setData(data, type) {
 
 function addNFT(data) {
   return (dispatch) => {
-    const url = "nft/addNft";
+    const url = 'nft/addNft';
     let params = JSON.stringify(data);
     const response = services.post(url, params);
     response.then((promise) => {
       if (promise.status === 200) {
-        dispatch(setData(promise.data.data, "ADD_NFT"));
+        dispatch(setData(promise.data.data, 'ADD_NFT'));
       } else {
         // console.log('erroer');
       }
@@ -23,7 +23,7 @@ function addNFT(data) {
 }
 function authLogin(nonce, signature) {
   return (dispatch) => {
-    const url = "user/login";
+    const url = 'user/login';
     let params = JSON.stringify({
       nonce: nonce,
       signature: signature,
@@ -31,21 +31,21 @@ function authLogin(nonce, signature) {
     const response = services.post(url, params);
     response.then(async (promise) => {
       if (promise.status === 200) {
-        localStorage.setItem("avangartAuthToken", promise.data.data.token);
+        localStorage.setItem('cybornToken', promise.data.data.token);
         if (promise.data.data.token) {
           const newresp = await services.getWeb3();
-          localStorage.setItem("userAddress", newresp.accounts[0]);
+          localStorage.setItem('userAddress', newresp.accounts[0]);
           newresp.isLoggedIn = true;
-          dispatch(setData(newresp, "FETCH_WEB3_DATA"));
+          dispatch(setData(newresp, 'FETCH_WEB3_DATA'));
         }
         dispatch(
           setData(
             { data: promise.data.data.details, status: true },
-            "AUTH_LOGIN"
+            'AUTH_LOGIN'
           )
         );
       } else {
-        localStorage.setItem("avangartAuthToken", "");
+        localStorage.setItem('cybornToken', '');
       }
     });
   };
@@ -56,7 +56,7 @@ function generateNonce(address) {
     const response = services.get(url);
     response.then((promise) => {
       if (promise.status === 200) {
-        dispatch(setData(promise.data.data.nonce, "GENERATE_NONCE"));
+        dispatch(setData(promise.data.data.nonce, 'GENERATE_NONCE'));
       } else {
         // console.log("erroer");
       }
@@ -69,7 +69,7 @@ function getCategoryList() {
     const response = services.get(url);
     response.then((promise) => {
       if (promise.status === 200) {
-        dispatch(setData(promise.data.data, "CATEGORY_LIST"));
+        dispatch(setData(promise.data.data, 'CATEGORY_LIST'));
       } else {
         // console.log("erroer");
       }
@@ -82,7 +82,7 @@ function getCollectionList() {
     const response = services.get(url, true);
     response.then((promise) => {
       if (promise.status === 200) {
-        dispatch(setData(promise.data.data, "COLLECTION_LIST"));
+        dispatch(setData(promise.data.data, 'COLLECTION_LIST'));
       } else {
         // console.log("erroer");
       }
@@ -103,20 +103,20 @@ function getCollectionList() {
 // }
 function getUserDetails() {
   return (dispatch) => {
-    const response = services.get("user/userDetails", true);
+    const response = services.get('user/userDetails', true);
     response.then(async (promise) => {
       if (promise.status === 200) {
         if (promise.data.data) {
           const newresp = await services.getWeb3();
-          localStorage.setItem("userAddress", newresp.accounts[0]);
+          localStorage.setItem('userAddress', newresp.accounts[0]);
           newresp.isLoggedIn = true;
-          dispatch(setData(newresp, "FETCH_WEB3_DATA"));
+          dispatch(setData(newresp, 'FETCH_WEB3_DATA'));
         }
-        dispatch(setData(promise.data, "AUTH_LOGIN"));
+        dispatch(setData(promise.data, 'AUTH_LOGIN'));
       } else {
-        localStorage.setItem("avangartAuthToken", "");
+        localStorage.setItem('cybornToken', '');
         if (!promise.response && promise.response?.status === 401) {
-          dispatch(setData(promise.response, "AUTH_LOGIN_ERROR"));
+          dispatch(setData(promise.response, 'AUTH_LOGIN_ERROR'));
         }
       }
     });
@@ -128,7 +128,7 @@ function getUserProfile(id) {
     const response = services.get(`user/getSingleUser/${id}`);
     response.then((promise) => {
       if (promise.status === 200) {
-        dispatch(setData(promise.data.data, "FETCHED_USER_PROFILE"));
+        dispatch(setData(promise.data.data, 'FETCHED_USER_PROFILE'));
       } else {
         // console.log("error");
       }
@@ -141,13 +141,13 @@ function updateNFT(data) {
     const url = `nft/updateNft/${data.id}`;
     const response = services.put(url, data).then((response) => {
       if (response.status === 200) {
-        dispatch(setData(response.data, "UPDATE_NFT"));
+        dispatch(setData(response.data, 'UPDATE_NFT'));
       }
       if (response.response && response.response.status === 403) {
-        dispatch(setData(response.response.data, "UPDATE_NFT"));
+        dispatch(setData(response.response.data, 'UPDATE_NFT'));
       }
       if (response.response && response.response.status === 400) {
-        dispatch(setData(response.response.data, "UPDATE_NFT"));
+        dispatch(setData(response.response.data, 'UPDATE_NFT'));
       }
     });
   };

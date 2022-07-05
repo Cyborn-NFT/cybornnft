@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import Router from 'next/router';
 import '../styles/progress.css';
 import Layout from './layout';
+import { Provider } from 'react-redux';
+import store from './../store';
 
 Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);
@@ -11,9 +13,11 @@ Router.events.on('routeChangeComplete', nProgress.done);
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
   );
 }
 

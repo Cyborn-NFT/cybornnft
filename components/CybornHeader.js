@@ -1,15 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
-import web3Modal from 'web3modal';
-import { providers, Contract } from 'ethers';
+import { providers, Contract, utils } from 'ethers';
 import { useEffect, useRef, useState } from 'react';
 import { BiWalletAlt } from 'react-icons/bi';
 import Web3Modal from 'web3modal';
 import { supabase } from '../client';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Image from 'next/image';
+import { connect } from 'react-redux';
+import { actions } from '../actions';
+import { web3 } from '../web3';
 
-function CybornHeader() {
+function CybornHeader(props) {
+  const { generateNonce, nonce, authLogin } = props;
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
@@ -23,11 +27,29 @@ function CybornHeader() {
 
   const [walletConnected, setWalletConnected] = useState(false);
   const [userAddress, setUserAddress] = useState('');
-
-  const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState('not-loaded');
-
   const web3ModalRef = useRef();
+
+  useEffect(() => {
+    console.log(nonce, userAddress);
+    if (nonce && userAddress) signatureRequest(nonce);
+  }, [nonce]);
+
+  const signatureRequest = async (nonce) => {
+    const signature = await web3.eth.personal.sign(
+      web3.utils.utf8ToHex(nonce),
+      userAddress
+    );
+    // const provider = await web3ModalRef.current.connect();
+    // const web3Provider = new providers.Web3Provider(provider);
+    // const signer = web3Provider.getSigner();
+    // const signature = await signer.signMessage(utils.hashMessage(nonce));
+    // const signature = await web3.eth.personal.sign(
+    //   web3.utils.utf8ToHex(nonce),
+    //   web3Data.accounts[0]
+    // );
+    await authLogin(nonce, signature);
+  };
 
   const getProviderOrSigner = async (needSigner = false) => {
     const provider = await web3ModalRef.current.connect();
@@ -48,6 +70,8 @@ function CybornHeader() {
       setUserAddress(addr.toString());
       return signer;
     }
+    generateNonce(addr);
+    console.log(signer, addr, chainId, needSigner, web3Provider);
     return web3Provider;
   };
 
@@ -85,49 +109,6 @@ function CybornHeader() {
     }
   };
 
-  async function loadNFTs() {
-    const web3Modal = new Web3Modal({
-      network: 'rinkeby',
-      cacheProvider: true,
-    });
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-
-    const marketContract = new ethers.Contract(
-      CYBORN_MARKET_ADDRESS,
-      CYBORN_MARKET_ABI,
-      signer
-    );
-    const tokenContract = new ethers.Contract(
-      CYBORN_NFT_ADDRESS,
-      CYBORN_NFT_ABI,
-      provider
-    );
-    const data = await marketContract.fetchItemsCreated();
-
-    const items = await Promise.all(
-      data.map(async (i) => {
-        const tokenUri = await tokenContract.tokenURI(i.tokenId);
-        const meta = await axios.get(tokenUri);
-        let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
-        let item = {
-          price,
-          tokenId: i.tokenId.toNumber(),
-          seller: i.seller,
-          owner: i.owner,
-          sold: i.sold,
-          image: meta.data.image,
-        };
-        return item;
-      })
-    );
-    const soldItems = items.filter((i) => i.sold);
-    setSold(soldItems);
-    setNfts(items);
-    setLoadingState('loaded');
-  }
-
   return (
     <>
       <Head>
@@ -140,12 +121,18 @@ function CybornHeader() {
       <nav className='navbar flex items-center py-2 px-10 flex-wrap top-0 left-0 right-0 z-50'>
         <Link href='/'>
           <a className='inline-flex items-center p-1 mr-4 navbar-logo'>
-            <img src='/ark.png' title='Cyborn' alt='Cyborn' />
+            <Image
+              width={95}
+              height={60}
+              src='/ark.png'
+              title='Cyborn'
+              alt='Cyborn'
+            />
           </a>
         </Link>
         <button
           className=' inline-flex p-3 hover:bg-background rounded lg:hidden text-white ml-auto hover:text-white outline-none'
-          onClick={handleClick}
+          onClick={() => handleClick()}
         >
           <svg
             className='w-6 h-6'
@@ -217,7 +204,7 @@ function CybornHeader() {
           </ul>
           <button
             type='button'
-            onClick={signOut}
+            onClick={() => signOut()}
             className='text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center'
           >
             Logout
@@ -233,11 +220,11 @@ function CybornHeader() {
           &nbsp;&nbsp;
           <button
             type='button'
-            onClick={connectWallet}
+            onClick={() => connectWallet()}
             className='text-white bg-blue-400 font-medium rounded-lg text-sm px-2 py-2 mt-0 text-center inline-flex items-center'
           >
-            <img width={18} height={18} src='/metamask.svg' /> &nbsp; Connect
-            with MetaMask
+            <Image width={22} height={22} src='/metamask.svg' alt='metamask' />{' '}
+            &nbsp; Connect with MetaMask
           </button>
         </div>
       </nav>
@@ -245,4 +232,30 @@ function CybornHeader() {
   );
 }
 
-export default CybornHeader;
+const mapDipatchToProps = (dispatch) => {
+  return {
+    authLogin: (nonce, signature) =>
+      dispatch(actions.authLogin(nonce, signature)),
+    generateNonce: (address) => dispatch(actions.generateNonce(address)),
+    getMarketPlaceNFT: (params) => dispatch(actions.getMarketPlaceNFT(params)),
+    getMoreMarketPlaceNFT: (params) =>
+      dispatch(actions.getMoreMarketPlaceNFT(params)),
+    getCategories: () => dispatch(actions.fetchCategories()),
+    clearMarketPlaceNFT: () =>
+      dispatch({ type: 'FETCHED_MARKETPLACE', data: [] }),
+    clearPagination: () => dispatch({ type: 'FETCHED_PAGINATION', data: [] }),
+    clearMoreMarketPlaceNFT: () =>
+      dispatch({ type: 'FETCHED_MORE_MARKETPLACE', data: [] }),
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    NFTs: state.fetchMarketPlaceNFT,
+    pagination: state.fetchPagination,
+    moreNFTs: state.fetchMoreMarketPlaceNFT,
+    categories: state.fetchCategory,
+    nonce: state.fetchNonce,
+  };
+};
+
+export default connect(mapStateToProps, mapDipatchToProps)(CybornHeader);
