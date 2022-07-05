@@ -1,10 +1,10 @@
-import { services } from '../services';
-import nftABI from '../contractData/abis/nft.json';
-import contractAddresses from '../contractData/contractAddress/addresses';
+import { services } from "../services";
+import nftABI from "../contractData/abis/nft.json";
+import contractAddresses from "../contractData/contractAddress/addresses";
 
 function fetchUserBalances(data) {
   return {
-    type: 'FETCH_USER_BALANCES', // dispatch user login event
+    type: "FETCH_USER_BALANCES", // dispatch user login event
     data: data,
   };
 }
@@ -18,7 +18,7 @@ function getNetworkId() {
   return (dispatch) => {
     const response = services.getNetworkId();
     response.then((promise) => {
-      dispatch(setDispatchData(promise, 'FETCH_NETWORK_ID'));
+      dispatch(setDispatchData(promise, "FETCH_NETWORK_ID"));
     });
   };
 }
@@ -26,14 +26,14 @@ function getNetworkId() {
 function getWeb3(val) {
   if (val) {
     return (dispatch) => {
-      dispatch(setDispatchData(null, 'FETCH_WEB3_DATA'));
+      dispatch(setDispatchData(null, "FETCH_WEB3_DATA"));
     };
   } else
     return (dispatch) => {
       const response = services.getWeb3();
       response.then((promise) => {
         if (promise?.accounts[0]) {
-          dispatch(setDispatchData(promise, 'FETCH_WEB3_DATA'));
+          dispatch(setDispatchData(promise, "FETCH_WEB3_DATA"));
         } else {
           localStorage.clear();
           // console.log('errorrrr in actions');
@@ -47,7 +47,7 @@ function enabledWalletConnect() {
     const response = services.enabledWalletConnect();
     response.then((promise) => {
       if (promise) {
-        dispatch(setDispatchData(promise, 'FETCH_WEB3_DATA'));
+        dispatch(setDispatchData(promise, "FETCH_WEB3_DATA"));
       } else {
         // console.log('error in actions');
       }
@@ -55,16 +55,18 @@ function enabledWalletConnect() {
   };
 }
 function enableMetamask() {
+  console.log("called");
   return (dispatch) => {
     const response = services.enableMetamask();
     response.then((promise) => {
+      console.log(promise);
       // console.log("present");
       if (!promise.error) {
         // console.log("this is new actions", promise);
-        dispatch(setDispatchData(promise, 'FETCH_WEB3_DATA'));
+        dispatch(setDispatchData(promise, "FETCH_WEB3_DATA"));
       } else {
         // console.log("i am in error", promise);
-        dispatch(setDispatchData(promise, 'FETCH_WEB3_DATA_ERROR'));
+        dispatch(setDispatchData(promise, "FETCH_WEB3_DATA_ERROR"));
       }
     });
   };
@@ -89,7 +91,7 @@ function getNFTContractInstance() {
     response.then((promise) => {
       // console.log(promise);
       if (promise) {
-        dispatch(setDispatchData(promise, 'NFT_CONTRACT_INSTANCE'));
+        dispatch(setDispatchData(promise, "NFT_CONTRACT_INSTANCE"));
       } else {
         // console.log('error in actions');
       }
