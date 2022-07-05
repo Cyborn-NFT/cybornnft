@@ -56,11 +56,6 @@ function SignIn(props) {
     }
   }, [authData]);
 
-  // useEffect(() => {
-  //   if (nonce && web3Data.accounts[0]) signatureRequest(nonce);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [nonce]);
-
   useEffect(() => {
     if (authData?.status === 401) {
       setLoader(false);
