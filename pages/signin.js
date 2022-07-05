@@ -47,7 +47,6 @@ function SignIn(props) {
     }
     if (web3Data.accounts[0] && nonce && !authData)
       signatureRequest(nonce, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [web3Data, nonce]);
   useEffect(() => {
     if (authData) {
