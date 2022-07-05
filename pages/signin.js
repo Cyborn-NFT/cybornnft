@@ -8,8 +8,13 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { actions } from "../actions";
 import { web3 } from "../web3";
+// import { useNavigate } from "react-router-dom";
+import { withRouter } from "react-router";
+import Router from "next/router";
+// import { NextResponse, NextRequest } from "next/server";
 
 function SignIn(props) {
+  // const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -25,7 +30,7 @@ function SignIn(props) {
     authData,
     enabledWalletConnect,
   } = props;
-  console.log("none", nonce);
+  console.log("none", authData);
   useEffect(() => {
     props.getWeb3();
   }, []);
@@ -34,13 +39,23 @@ function SignIn(props) {
       return setError({ isError: true, msg: "User denied sign in..", code: 1 });
     if (web3Data.accounts[0] && genNonce) {
       setLoader(true);
-      if (web3Data.accounts[0] && !nonce) signatureRequest(undefined, true);
-      else if (!web3Data.accounts[0])
+      if (web3Data.accounts[0] && !nonce) {
+        console.log("nonce is ", nonce, web3Data);
+        signatureRequest(undefined, true);
+      } else if (!web3Data.accounts[0])
         setError({ isError: true, msg: "User denied sign in..", code: 1 });
-      else if (web3Data.accounts[0] && nonce) signatureRequest(nonce, false);
     }
+    if (web3Data.accounts[0] && nonce && !authData)
+      signatureRequest(nonce, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [web3Data, nonce]);
+  useEffect(() => {
+    if (authData) {
+      const { pathname } = Router;
+      console.log(pathname);
+      if (pathname === "/signin") Router.push("/");
+    }
+  }, [authData]);
 
   // useEffect(() => {
   //   if (nonce && web3Data.accounts[0]) signatureRequest(nonce);
@@ -98,12 +113,14 @@ function SignIn(props) {
       !localStorage.getItem("cybornAuthToken") ||
       web3Data.accounts[0] !== localStorage.getItem("userAddress")
     ) {
+      console.log("inside");
       signatureRequest(undefined, true);
     }
   };
   const signatureRequest = async (nonce, stepOne) => {
     if (stepOne) {
       generateNonce(web3Data.accounts[0]);
+      setGenNonce(false);
     } else {
       console.log("nonce", nonce);
       try {
