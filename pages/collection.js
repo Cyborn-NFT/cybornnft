@@ -1,73 +1,66 @@
 import React from "react";
 import {useEffect, useState} from "react";
 
-function Edit({profile}){
+function Collection({collection}){
 
 
-  const [profileState, setProfileState] = useState([]);
+  const [collectionState, setcollectionState] = useState([]);
   const [image, setImage] = useState(null);
-  const [walletAddress, setWalletAddress] = useState("")
-  const [displayName, setDisplayName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [youtube, setYoutube] = useState("");
-  const [linkedin, setLinkedin] = useState("")
-  const [pinterest, setPinterest] = useState("")
+  const [collectionName, setcollectionName] = useState("")
+  const [url, seturl] = useState("")
+  const [description, setdescription] = useState("")
+  const [creatorEarning, setcreatorEarning] = useState("");
+  const [blockchain, setblockchain] = useState("")
   const [loading, setLoading] = useState(false)
 
   useEffect(()=>{
-    setProfileState(profile);
-    setImage(profile);
-    setWalletAddress(profile);
-    setDisplayName(profile);
-    setEmail(profile);
-    setPassword(profile);
-    setYoutube(profile);
-    setLinkedin(profile);
-    setPinterest(profile);
-  }, [profile]);
+    setcollectionState(collection);
+    setImage(collection);
+    setcollectionName(collection);
+    seturl(collection);
+    setdescription(collection);
+    setcreatorEarning(collection);
+    setblockchain(collection);
+  }, [collection]);
 
-  let submitProfile = async(e) => {
+  let submitcollection = async(e) => {
     setLoading(true);
     e.preventDefault();
-    let res = await fetch("http://localhost:3000/api/profile", {
+    let res = await fetch("http://localhost:3000/api/collection", {
       method: "POST",
       body: JSON.stringify({
         image: image,
-        walletAddress: walletAddress,
-        displayName: displayName,
-        email: email,
-        password: password,
-        youtube: youtube,
-        linkedin: linkedin,
-        pinterest: pinterest,
+        collectionName: collectionName,
+        url: url,
+        description: description,
+        creatorEarning: creatorEarning,
+        blockchain: blockchain,
       }),
     });
 
     res = await res.json();
-    setProfileState([...profileState, res]);
+    setcollectionState([...collectionState, res]);
     setImage(e.target.files);
     setWalletAddress("");
-    setDisplayName("");
-    setEmail("");
-    setPassword("");
-    setYoutube("");
-    setLinkedin("");
-    setPinterest("");
+    setcollectionName("");
+    seturl("");
+    setdescription("");
+    setcreatorEarning("");
+    setblockchain("");
     setLoading(false);
   };
 
 
   return(
     <div className='flex h-full flex-col md:flex-row lg:p-16 lg:mt-8 w-4/6'>
-      <form onSubmit={submitProfile}>
+      <form onSubmit={submitcollection}>
       <div className='p-10 flex-1 flex flex-col justify-center '>
         <div className='flex-col md:items-start'>
           <h1 className="text-blue-400 text-7xl text-extrabold">
-            Edit Profile
+            Edit collection
           </h1>
           <br />
-          <p className="font-extralight">Profile Image </p>
+          <p className="font-extralight">collection Image </p>
           <br />
           <p className="font-extralight">File types supported: JPG, PNG. Recommended: 300 x 300 px. Max Size: 10MB</p>
           <br />
@@ -84,41 +77,37 @@ function Edit({profile}){
           </div>
           <br />
           <br />
+
           <div className="lg:grid grid-cols-2 gap-4">
-          <p>Wallet</p>
-          <p> Wallet Address</p>
-          </div>
-          <br />
-          <div className="lg:grid grid-cols-2 gap-4">
-          <p>Display Name</p>
+          <p>Collection Name</p>
           <input
-            placeholder='Display Name'
+            placeholder='Collection Name'
             className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-            name="displayName"
-            value={displayName}
-            onChange={(e)=>setDisplayName(e.target.value)}
+            name="collectionName"
+            onChange={(e)=> setcollectionName(e.target.value) }
+            value={collectionName}
           />
           </div>
 
           <br />
           <div className="lg:grid grid-cols-2 gap-4">
-          <p>Email</p>
+          <p>URL</p>
           <input
-            placeholder='Email'
-            name="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            placeholder='URL'
+            name="url"
+            value={url}
+            onChange={(e)=> seturl(e.target.value)}
             className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
           />
           </div>
           <br />
           <div className="lg:grid grid-cols-2 gap-4">
-          <p>Set Password</p>
+          <p>Description</p>
           <input
-            placeholder='Set Password'
-            name="password"
-            value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            placeholder='Description'
+            name="description"
+            value={description}
+            onChange = {(e)=> setdescription(e.target.value)}
             className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
           />
           </div>
@@ -145,24 +134,16 @@ function Edit({profile}){
           <br />
           <br />
           <div className="lg:grid grid-cols-2 gap-4">
-          <p>Youtube</p>
-          <input placeholder="Enter Youtube Link" name="youtube" value={youtube} onChange={(e)=>setYoutube(e.target.value)}
+          <p>Creator Earnings</p>
+          <input placeholder="Percentage Fee" name="creatorEarning" value={creatorEarning} onChange={(e)=>setcreatorEarning(e.target.value)}
             className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
           >
           </input>
           </div>
           <br />
           <div className="lg:grid grid-cols-2 gap-4">
-          <p>LinkedIn</p>
-          <input placeholder="Enter LinkedIn Link" name="linkedin" value={linkedin} onChange={(e)=>setLinkedin(e.target.value)}
-            className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-          >
-          </input>
-          </div>
-          <br />
-          <div className="lg:grid grid-cols-2 gap-4">
-          <p>Pinterest</p>
-          <input placeholder="Enter Pinterest Link" name="pinterest" value={pinterest} onChange={(e)=>setPinterest(e.target.value)}
+          <p>Blockchain</p>
+          <input placeholder="Select Blockchain" name="blockchain" value={blockchain} onChange={(e)=>setblockchain(e.target.value)}
             className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-transparent border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
           >
           </input>
@@ -173,7 +154,7 @@ function Edit({profile}){
             disabled = {loading ? true : false}
             className='block w-full mb-4 px-12 py-3 text-sm font-medium text-white rounded-md shadow bg-blue-400 sm:w-auto focus:outline-none focus:ring'
           >
-            Save changes
+            Submit changes
           </button>
           <button
             className='block w-full mb-4 px-12 py-3 text-sm font-medium text-white rounded-md bg-transparent border border-solid border-gray-300 transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
@@ -189,4 +170,4 @@ function Edit({profile}){
   )
 }
 
-export default Edit;
+export default Collection;
