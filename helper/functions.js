@@ -1,5 +1,5 @@
-import Compressor from "compressorjs";
-import toStream from "it-to-stream";
+// import Compressor from "compressorjs";
+// import toStream from "it-to-stream";
 import FileType from "file-type";
 import ipfs from "../config/ipfs";
 import { ipfsURL } from "../config";

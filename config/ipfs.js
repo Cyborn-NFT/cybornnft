@@ -2,6 +2,11 @@
 // const ipfsApi = require('ipfs-api');
 // const ipfs = ipfsApi('ipfs.18.192.53.115.nip.io'); // stagging IPFS server
 
-const ipfsHttpClient = require('ipfs-http-client');
+const ipfsHttpClient = require("ipfs-http-client");
+const ipfs = ipfsHttpClient.create({
+  host: "ipfs.infura.io",
+  port: "5001",
+  protocol: "https",
+});
 
 export default ipfs;
