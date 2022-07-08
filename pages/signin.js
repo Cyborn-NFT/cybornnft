@@ -52,7 +52,7 @@ function SignIn(props) {
     if (authData) {
       const { pathname } = Router;
       console.log(pathname);
-      if (pathname === "/signin") Router.push("/nftDetails");
+      if (pathname === "/signin") Router.push("/");
     }
   }, [authData]);
 
